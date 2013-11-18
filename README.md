@@ -3,8 +3,11 @@
 #### CS 345H Fall 2013
 
 > Andrew Sharp
+> 
 > Calvin MacKenzie
+> 
 > Corbyn Salisbury
+> 
 > Irvin Shen
 
 ## Scala Setup
@@ -26,6 +29,11 @@ cd lolcode-dsl
 git clone git@github.com:calvinmm/lolcode-dsl.git
 sbt "eclipse with-source=true"
 ```
+
+**Important** - If you wish to use Eclipse, you must follow the Scala sbt setup for Eclipse, in the [Scala Setup section](#scala-setup)
+
+### Style
+
 For style, we will mostly follow [Twitter's Formatting Guide](http://twitter.github.io/effectivescala/#Formatting) as well as the official [Scala Style Guide](http://docs.scala-lang.org/style/).
 
 ### Specific Rules
