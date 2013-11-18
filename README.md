@@ -21,7 +21,7 @@ If you need to review your Scala, you can find a helpful guide [here](http://utc
 
 ## Contributing
 
-You should clone the repo via ssh (preferably) and this will require you to authenticate with your Github profile. Following this, you can up the project with Eclipse (if you prefer).
+You should clone the repo via ssh (preferably) and this will require you to authenticate with your Github profile. Following this, you can set up the project with Eclipse (if you prefer), any editor will work fine.
 
 ```
 mkdir lolcode-dsl
