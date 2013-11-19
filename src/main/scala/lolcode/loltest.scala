@@ -1,11 +1,16 @@
 package lolcode
 
-object loltest extends lolcode {
-  def main(args: Array[String]): Unit =
+object LolTest extends LolCode
+{
+    val vISIBLE = "VISIBLE"
+    def main(args: Array[String]): Unit = 
     {
-      10 PRINT "Hello World!"
-      20 END
+        //10 PRINT "Hello World!"
+        //20 END
+        HAI
+        VISIBLE("hello world")
 
-      RUN
+        KTHXBAI
+        //RUN
     }
 }
