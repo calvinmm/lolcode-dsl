@@ -11,7 +11,7 @@ class LolCode
     var lines = new HashMap[Int, LolLine]
     var current = 1
 
-    def KTHXBAI() = 
+    def KTHXBYE() = 
     { 
       lines(current) = End(current)
       gotoLine(lines.keys.toList.sorted.head)
