@@ -3,8 +3,11 @@ BT=sbt
 run:
 	@echo not implemented
 
+temp-test:
+	@$(BT) "run-main lolcode.LolTest"
+
 test:
-	$(BT) "run-main lolcode.loltest"
+	@$(BT) "test-only"
 
 console:
 	$(BT) console
