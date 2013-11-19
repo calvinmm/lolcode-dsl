@@ -10,6 +10,8 @@ object LolTest extends LolCode
         HAI
         VISIBLE("hello world")
 
+        Lol VISIBLE "hello world 2"
+
         KTHXBAI
         //RUN
     }

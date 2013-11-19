@@ -10,10 +10,13 @@ class LolCode
 
     var lines = new HashMap[Int, LolLine]
     var current = 1
+
     def KTHXBAI() = 
-    { lines(current) = End(current)
+    { 
+      lines(current) = End(current)
       gotoLine(lines.keys.toList.sorted.head)
     }
+
     def HAI() = { var lines = new HashMap[Int, LolLine] }
     /**
      * LineBuilder is the jump off point for the line number syntax of
@@ -30,25 +33,11 @@ class LolCode
 
       object PRINT {
         def apply(str:String) = lines(num) = PrintString(num, str)
-        //def apply(number: BigInt) = lines(num) = PrintNumber(num, number)
-        //def apply(s: Symbol) = lines(num) = PrintVariable(num, s)
-        //def apply(fn:Function0[String]) = lines(num) = PrintResult(num, fn)
     }
   }
 
-    case class LineBuilderS(s: String) {
-      //def END() = lines(num) = End(num)
 
-      object VISIBLE {
-        def apply(str:String) = 
-        {
-          println("laskjflksjf")
-          lines(current) = PrintString(current, str)
-        }
-      }
-  }
-
-        /**
+    /**
      * This is the runtime evaluator of the built Scala classes from the
      * original BASIC forms.  Currently, lines can only be incremented by
      * 10, otherwise you program might not act the way you expect.
@@ -61,7 +50,6 @@ class LolCode
         }
         case End(_) => {
           println()
-          println("BREAK IN LINE " + line)
         }
         case _ => {
           println()
@@ -70,24 +58,19 @@ class LolCode
     }
 
     implicit def newline(i: Int) = LineBuilder(i)
-    implicit def newline(s: String) = LineBuilderS(s)
-    //def VISIBLE(s: String) = {
-      //println("laskjf")
-      //LineBuilderS(s)
-    //}
+    
     object VISIBLE
     {
       def apply(s: String) = 
       {
-        println("laskdjflkasjf")
         lines(current) = PrintString(current, s)
         current += 1
-        //LineBuilderS(s)
       }
     }
-    case class Var(name: String) extends Expr
-    trait Expr
+
+    object Lol
     {
-       def unary_VISIBLE = this
+      def apply(s: String) = println(s);
+      def VISIBLE(s: String) = apply(s)
     }
 }
