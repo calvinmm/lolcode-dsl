@@ -24,11 +24,11 @@ If you need to review your Scala, you can find a helpful guide [here](http://utc
 You should clone the repo via ssh (preferably) and this will require you to authenticate with your Github profile. Following this, you can set up the project with Eclipse (if you prefer), any editor will work fine.
 
 ```
-mkdir lolcode-dsl
-cd lolcode-dsl
 git clone git@github.com:calvinmm/lolcode-dsl.git
-sbt "eclipse with-source=true"
+make eclipse
 ```
+
+*Side note* - The Makefile just runs `sbt` commands
 
 **Important** - If you wish to use Eclipse, you must follow the Scala sbt setup for Eclipse, in the [Scala Setup section](#scala-setup)
 
