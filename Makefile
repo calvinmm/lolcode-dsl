@@ -4,7 +4,7 @@ run:
 	@echo not implemented
 
 test:
-	@echo not implemented
+	$(BT) "run-main lolcode.loltest"
 
 console:
 	$(BT) console
