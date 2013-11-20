@@ -12,6 +12,7 @@ class JUnitLolTests {
 
     // run the tests and capture output
     val output: String = "make temp-test".!!
+
     // remove lines from sbt and empty lines
     val lines: Vector[String] = output.split("\n")
       .toVector
