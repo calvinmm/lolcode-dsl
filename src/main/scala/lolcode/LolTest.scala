@@ -2,12 +2,12 @@ package lolcode
 
 object LolTest extends LolCode
 {
-    val vISIBLE = "VISIBLE"
     def main(args: Array[String]): Unit = 
     {
         HAI
-        VISIBLE("hello world")
-
+        VISIBLE ("hello world")
+        I_HAZ_A ('a) ITZ 1
+        VISIBLE ('a)
         Lol VISIBLE "hello world 2"
 
         KTHXBYE
