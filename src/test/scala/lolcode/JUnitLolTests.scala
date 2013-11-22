@@ -25,20 +25,15 @@ class JUnitLolTests {
 
     // use a special logger to capture stderr
     val logger = ProcessLogger(
-      (o: String) => {
-        println("Adding regular output!")
-        out += o
-      },
-      (e: String) => {
-        println(f"Adding error => $e")
-        out += e
-      })
+      (o: String) => out += o,
+      (e: String) => out += e)
 
     command ! logger
 
     // remove lines from sbt and empty lines
     out.toVector
       .map(x => x.trim())
+      .map(x => x.replace("[31m", ""))
       .filterNot(_.startsWith("["))
       .filterNot(_.equals(""))
   }
@@ -58,7 +53,7 @@ class JUnitLolTests {
     val output = run_test_error(command)
 
     val expected: Vector[String] =
-      Vector("hello world", Console.RED + "goodbye world" + Console.RESET, Console.RED + 10.2 + Console.RESET).map(_.toString)
+      Vector("hello world", "goodbye world" + Console.RESET, 10.2 + Console.RESET).map(_.toString)
     assertEquals(output, expected)
   }
 
