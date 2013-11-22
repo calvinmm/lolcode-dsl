@@ -31,6 +31,17 @@ object LolTest_IntAssign extends LolCode {
   }
 }
 
+object LolTest_Test extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('a) ITZ 1
+    VISIBLE('a)
+    I_HAZ_A('b) R ('a UP 1)
+    VISIBLE('b)
+    KTHXBYE
+  }
+}
+
 object LolTest_StringAssign extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
