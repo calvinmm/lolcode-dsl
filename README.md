@@ -32,6 +32,14 @@ make eclipse
 
 **Important** - If you wish to use Eclipse, you must follow the Scala sbt setup for Eclipse, in the [Scala Setup section](#scala-setup)
 
+### Running Tests
+
+We have implemented JUnit tests to test the functionality of our code.
+
+```
+make test
+```
+
 ### Style
 
 For style, we will mostly follow [Twitter's Formatting Guide](http://twitter.github.io/effectivescala/#Formatting) as well as the official [Scala Style Guide](http://docs.scala-lang.org/style/).

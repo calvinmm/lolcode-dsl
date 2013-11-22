@@ -9,6 +9,10 @@ class LolCode {
   case class PrintVariable(num: Int, s: Symbol) extends LolLine
   case class PrintNumber(num: Int, s: Int) extends LolLine
   case class PrintDouble(num: Int, s: Double) extends LolLine
+  case class ErrorPrintString(num: Int, s: String) extends LolLine
+  case class ErrorPrintVariable(num: Int, s: Symbol) extends LolLine
+  case class ErrorPrintNumber(num: Int, s: Int) extends LolLine
+  case class ErrorPrintDouble(num: Int, s: Double) extends LolLine
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
   case class End(num: Int) extends LolLine
 
@@ -63,6 +67,7 @@ class LolCode {
    */
   private def gotoLine(line: Int) {
     lines(line) match {
+      // print to stdout
       case PrintString(_, s: String) => {
         println(s)
         gotoLine(line + 1)
@@ -77,6 +82,23 @@ class LolCode {
       }
       case PrintDouble(_, s: Double) => {
         println(s)
+        gotoLine(line + 1)
+      }
+      // print to stderr
+      case ErrorPrintString(_, s: String) => {
+        Console.err.println(Console.RED + s + Console.RESET)
+        gotoLine(line + 1)
+      }
+      case ErrorPrintVariable(_, s: Symbol) => {
+        Console.err.println(Console.RED + binds.any(s) + Console.RESET)
+        gotoLine(line + 1)
+      }
+      case ErrorPrintNumber(_, s: Int) => {
+        Console.err.println(Console.RED + s + Console.RESET)
+        gotoLine(line + 1)
+      }
+      case ErrorPrintDouble(_, s: Double) => {
+        Console.err.println(Console.RED + s + Console.RESET)
         gotoLine(line + 1)
       }
       case Assign(_, fn: Function0[Unit]) =>
@@ -114,17 +136,13 @@ class LolCode {
   def OVAR(i: Double, j: Double): Double = { i / j }
   def MOD(i: Double, j: Double): Double = { i % j }
 
-
   // infix operators
-  implicit def operator_int_int(i: Int) = new {
+  implicit def operator_int(i: Int) = new {
     def UP(j: Int): Int = { i + j }
     def NERF(j: Int): Int = { i - j }
     def TIEMZ(j: Int): Int = { i * j }
     def OVAR(j: Int): Int = { i / j }
     def MOD(j: Int): Int = { i % j }
-  }
-
-  implicit def operator_int_Double(i: Int) = new {
     def UP(j: Double): Double = { i + j }
     def NERF(j: Double): Double = { i - j }
     def TIEMZ(j: Double): Double = { i * j }
@@ -132,21 +150,18 @@ class LolCode {
     def MOD(j: Double): Double = { i % j }
   }
 
-  implicit def operator_Double_int(i: Double) = new {
+  implicit def operator_double(i: Double) = new {
     def UP(j: Int): Double = { i + j }
     def NERF(j: Int): Double = { i - j }
     def TIEMZ(j: Int): Double = { i * j }
     def OVAR(j: Int): Double = { i / j }
     def MOD(j: Int): Double = { i % j }
-  } 
- 
-  implicit def operator_double_double(i: Double) = new {
     def UP(j: Double): Double = { i + j }
     def NERF(j: Double): Double = { i - j }
     def TIEMZ(j: Double): Double = { i * j }
     def OVAR(j: Double): Double = { i / j }
     def MOD(j: Double): Double = { i % j }
-  } 
+  }
 
   object VISIBLE {
     def apply(s: String) = {
@@ -163,6 +178,25 @@ class LolCode {
     }
     def apply(s: Double) = {
       lines(current) = PrintDouble(current, s)
+      current += 1
+    }
+  }
+  
+  object COMPLAIN {
+    def apply(s: String) = {
+      lines(current) = ErrorPrintString(current, s)
+      current += 1
+    }
+    def apply(s: Symbol) = {
+      lines(current) = ErrorPrintVariable(current, s)
+      current += 1
+    }
+    def apply(s: Int) = {
+      lines(current) = ErrorPrintNumber(current, s)
+      current += 1
+    }
+    def apply(s: Double) = {
+      lines(current) = ErrorPrintDouble(current, s)
       current += 1
     }
   }
