@@ -10,7 +10,7 @@
 6. :white_check_mark: ~~Variables (Double)~~
 7. :white_check_mark: ~~Math (Double)~~
 8. :white_check_mark: ~~Stderr Printing~~
-9. Math with variables
+9. :white_check_mark: ~~Math with variables~~
 10. If Statements
 11. Loops
 12. Max/Min
