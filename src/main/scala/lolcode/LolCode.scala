@@ -148,6 +148,11 @@ class LolCode {
     def TIEMZ(j: Double): Double = { i * j }
     def OVAR(j: Double): Double = { i / j }
     def MOD(j: Double): Double = { i % j }
+    def UP(j: Symbol): Double = { i + binds.num(j) }
+    def NERF(j: Symbol): Double = { i - binds.num(j) }
+    def TIEMZ(j: Symbol): Double = { i * binds.num(j) }
+    def OVAR(j: Symbol): Double = { i / binds.num(j) }
+    def MOD(j: Symbol): Double = { i % binds.num(j) }
   }
 
   implicit def operator_double(i: Double) = new {
@@ -161,6 +166,29 @@ class LolCode {
     def TIEMZ(j: Double): Double = { i * j }
     def OVAR(j: Double): Double = { i / j }
     def MOD(j: Double): Double = { i % j }
+    def UP(j: Symbol): Double = { i + binds.num(j) }
+    def NERF(j: Symbol): Double = { i - binds.num(j) }
+    def TIEMZ(j: Symbol): Double = { i * binds.num(j) }
+    def OVAR(j: Symbol): Double = { i / binds.num(j) }
+    def MOD(j: Symbol): Double = { i % binds.num(j) }    
+  }
+
+  implicit def operator_symbol(i: Symbol) = new {
+    def UP(j: Int): Double = { binds.num(i) + j }
+    def NERF(j: Int): Double = { binds.num(i) - j }
+    def TIEMZ(j: Int): Double = { binds.num(i) * j }
+    def OVAR(j: Int): Double = { binds.num(i) / j }
+    def MOD(j: Int): Double = { binds.num(i) % j }
+    def UP(j: Double): Double = { binds.num(i) + j }
+    def NERF(j: Double): Double = { binds.num(i) - j }
+    def TIEMZ(j: Double): Double = { binds.num(i) * j }
+    def OVAR(j: Double): Double = { binds.num(i) / j }
+    def MOD(j: Double): Double = { binds.num(i) % j }
+    def UP(j: Symbol): Double = { binds.num(i) + binds.num(j) }
+    def NERF(j: Symbol): Double = { binds.num(i) - binds.num(j) }
+    def TIEMZ(j: Symbol): Double = { binds.num(i) * binds.num(j) }
+    def OVAR(j: Symbol): Double = { binds.num(i) / binds.num(j) }
+    def MOD(j: Symbol): Double = { binds.num(i) % binds.num(j) }    
   }
 
   object VISIBLE {
