@@ -46,6 +46,9 @@ Specifically, please abide by the following style rules:
 1. If a solution exists functionally, opt to use it instead of one that is imperative 
 1. **Never** use `null`, always use `Option`
 
+## Todo
+[Tasks left to accomplish](todo.md)
+
 ## Issues
 Find and report issues [here](https://github.com/calvinmm/lolcode-dsl/issues)
 
