@@ -9,10 +9,10 @@
 5. :white_check_mark: ~~Variables (String)~~
 6. :white_check_mark: ~~Variables (Double)~~
 7. :white_check_mark: ~~Math (Double)~~
-8. Math with variables
-9. If Statements
-10. Loops
-11. Stderr Printing
+8. :white_check_mark: ~~Stderr Printing~~
+9. Math with variables
+10. If Statements
+11. Loops
 12. Max/Min
 
 ### Stretch Goals
