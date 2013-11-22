@@ -8,6 +8,7 @@ class LolCode {
   case class PrintString(num: Int, s: String) extends LolLine
   case class PrintVariable(num: Int, s: Symbol) extends LolLine
   case class PrintNumber(num: Int, s: Int) extends LolLine
+  case class PrintDouble(num: Int, s: Double) extends LolLine
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
   case class End(num: Int) extends LolLine
 
@@ -38,6 +39,10 @@ class LolCode {
       lines(current) = Assign(current, (() => binds.set(sym, v)))
       current += 1
     }
+    def ITZ(v: Double): Unit = {
+      lines(current) = Assign(current, (() => binds.set(sym, v)))
+      current += 1
+    }
 
     def R(v: String): Unit = {
       lines(current) = Assign(current, (() => binds.set(sym, v)))
@@ -47,23 +52,9 @@ class LolCode {
       lines(current) = Assign(current, (() => binds.set(sym, v)))
       current += 1
     }
-  }
-
-  /**
-   * build our lines
-   */
-  case class LineBuilder(num: Int) {
-    def END() = lines(num) = End(num)
-
-    object PRINT {
-      def apply(str: String) = lines(num) = PrintString(num, str)
-      def apply(s: Symbol) = lines(num) = PrintVariable(num, s)
-    }
-    object I_HAZ_A {
-      def apply(fn: Function0[Unit]) = lines(num) = Assign(num, fn)
-    }
-    object LOL {
-      def apply(fn: Function0[Unit]) = lines(num) = Assign(num, fn)
+    def R(v: Double): Unit = {
+      lines(current) = Assign(current, (() => binds.set(sym, v)))
+      current += 1
     }
   }
 
@@ -84,6 +75,10 @@ class LolCode {
         println(s)
         gotoLine(line + 1)
       }
+      case PrintDouble(_, s: Double) => {
+        println(s)
+        gotoLine(line + 1)
+      }
       case Assign(_, fn: Function0[Unit]) =>
         {
           fn()
@@ -93,10 +88,6 @@ class LolCode {
       case _ =>
     }
   }
-
-  // implicit magic
-  implicit def newline(i: Int) = LineBuilder(i)
-  implicit def symbol2Assignment(sym: Symbol) = Assignment(sym)
 
   // prefix operators
   def UP(i: Int, j: Int): Int = { i + j }
@@ -125,6 +116,10 @@ class LolCode {
     }
     def apply(s: Int) = {
       lines(current) = PrintNumber(current, s)
+      current += 1
+    }
+    def apply(s: Double) = {
+      lines(current) = PrintDouble(current, s)
       current += 1
     }
   }

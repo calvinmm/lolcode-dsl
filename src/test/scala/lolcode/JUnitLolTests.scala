@@ -24,10 +24,8 @@ class JUnitLolTests {
     val command: String = "make specific-test O=LolTest_Visible"
     val output = run_test(command)
     
-    val actual: String = output(0)
-    val expected: String = "hello world"
-
-    assertEquals(actual, expected)
+    val expected: Vector[String] = Vector("hello world", 3, 4.5).map(_.toString)
+    assertEquals(output, expected)
   }
 
   @Test
@@ -36,7 +34,6 @@ class JUnitLolTests {
     val output = run_test(command)
     
     val expected: Vector[String] = Vector(1, 1337).map(_.toString)
-
     assertEquals(output, expected)
   }
   

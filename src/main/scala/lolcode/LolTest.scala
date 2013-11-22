@@ -4,6 +4,8 @@ object LolTest_Visible extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
     VISIBLE("hello world")
+    VISIBLE(3)
+    VISIBLE(4.5)
     KTHXBYE
   }
 }
@@ -25,6 +27,17 @@ object LolTest_StringAssign extends LolCode {
     I_HAZ_A('z) ITZ "cat"
     VISIBLE('z)
     I_HAZ_A('q) R "doge"
+    VISIBLE('q)
+    KTHXBYE
+  }
+}
+
+object LolTest_DoubleAssign extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('z) ITZ 3.5
+    VISIBLE('z)
+    I_HAZ_A('q) R 10.2
     VISIBLE('q)
     KTHXBYE
   }
@@ -94,11 +107,11 @@ object LolTest_Math_Mod extends LolCode {
 object LolTest_BTW extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
-    BTW ("hide")
-    VISIBLE ("show")
-    BTW ("hide")
-    VISIBLE ("show")
-    BTW ("hide")
+    BTW("hide")
+    VISIBLE("show")
+    BTW("hide")
+    VISIBLE("show")
+    BTW("hide")
     KTHXBYE
   }
 }
