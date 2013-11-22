@@ -96,14 +96,57 @@ class LolCode {
   def OVAR(i: Int, j: Int): Int = { i / j }
   def MOD(i: Int, j: Int): Int = { i % j }
 
+  def UP(i: Int, j: Double): Double = { i + j }
+  def NERF(i: Int, j: Double): Double = { i - j }
+  def TIEMZ(i: Int, j: Double): Double = { i * j }
+  def OVAR(i: Int, j: Double): Double = { i / j }
+  def MOD(i: Int, j: Double): Double = { i % j }
+
+  def UP(i: Double, j: Int): Double = { i + j }
+  def NERF(i: Double, j: Int): Double = { i - j }
+  def TIEMZ(i: Double, j: Int): Double = { i * j }
+  def OVAR(i: Double, j: Int): Double = { i / j }
+  def MOD(i: Double, j: Int): Double = { i % j }
+
+  def UP(i: Double, j: Double): Double = { i + j }
+  def NERF(i: Double, j: Double): Double = { i - j }
+  def TIEMZ(i: Double, j: Double): Double = { i * j }
+  def OVAR(i: Double, j: Double): Double = { i / j }
+  def MOD(i: Double, j: Double): Double = { i % j }
+
+
   // infix operators
-  implicit def operator_int(i: Int) = new {
+  implicit def operator_int_int(i: Int) = new {
     def UP(j: Int): Int = { i + j }
     def NERF(j: Int): Int = { i - j }
     def TIEMZ(j: Int): Int = { i * j }
     def OVAR(j: Int): Int = { i / j }
     def MOD(j: Int): Int = { i % j }
   }
+
+  implicit def operator_int_Double(i: Int) = new {
+    def UP(j: Double): Double = { i + j }
+    def NERF(j: Double): Double = { i - j }
+    def TIEMZ(j: Double): Double = { i * j }
+    def OVAR(j: Double): Double = { i / j }
+    def MOD(j: Double): Double = { i % j }
+  }
+
+  implicit def operator_Double_int(i: Double) = new {
+    def UP(j: Int): Double = { i + j }
+    def NERF(j: Int): Double = { i - j }
+    def TIEMZ(j: Int): Double = { i * j }
+    def OVAR(j: Int): Double = { i / j }
+    def MOD(j: Int): Double = { i % j }
+  } 
+ 
+  implicit def operator_double_double(i: Double) = new {
+    def UP(j: Double): Double = { i + j }
+    def NERF(j: Double): Double = { i - j }
+    def TIEMZ(j: Double): Double = { i * j }
+    def OVAR(j: Double): Double = { i / j }
+    def MOD(j: Double): Double = { i % j }
+  } 
 
   object VISIBLE {
     def apply(s: String) = {
