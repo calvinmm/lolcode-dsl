@@ -106,6 +106,7 @@ object LolTest_Math_Double_Up extends LolCode {
 }
 
 // This test will fail until we obey order of operations
+// TURN BACK ON WHEN TESTING ORDER OF OPERATIONS
 object LolTest_Math_Up_Tiemz extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
