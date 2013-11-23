@@ -46,12 +46,12 @@ IZ [VAR] [OPERATOR] [VALUE]?
 ```
 IM IN YR LOOP
 	...SOMECODE
-	KTHX
+	GTFO
 IM OUTTA YR LOOP
 ```
 
-* Runs the same code in the `IM IN YR LOOP` code block until it goes to a `KTHX` instruction in the code block
-* An `IM IN YR LOOP` code block which never goes to a `KTHX` instruction causes an infinite loop
+* Runs the same code in the `IM IN YR LOOP` code block until it goes to a `GTFO` instruction in the code block
+* An `IM IN YR LOOP` code block which never goes to a `GTFO` instruction causes an infinite loop
 
 `KTHXBYE`
 
