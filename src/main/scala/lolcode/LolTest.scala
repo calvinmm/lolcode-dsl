@@ -207,3 +207,17 @@ object LolTest_BTW extends LolCode {
     KTHXBYE
   }
 }
+
+object LolTest_IZ_PASS extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('num) ITZ 4
+    IZ(10)
+      LOL('num) R 5
+    NOWAI
+      LOL('num) R 6
+    KTHX
+    VISIBLE('num)
+    KTHXBYE
+  }
+}

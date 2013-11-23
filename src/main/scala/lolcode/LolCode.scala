@@ -16,6 +16,9 @@ class LolCode {
   case class ErrorPrintNumber(num: Int, s: Int) extends LolLine
   case class ErrorPrintDouble(num: Int, s: Double) extends LolLine
   case class ErrorPrintFunction(num: Int, s: Function0[Int]) extends LolLine
+  case class StartFalse(num: Int) extends LolLine
+  case class EndIf(num: Int) extends LolLine
+  case class Pass(num: Int) extends LolLine
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
   case class End(num: Int) extends LolLine
 
@@ -24,7 +27,7 @@ class LolCode {
 
   var lines = new HashMap[Int, LolLine]
   val binds = new Bindings[AnyVal]
-
+  
   def KTHXBYE() = {
     lines(current) = End(current)
     gotoLine(lines.keys.toList.sorted.head)
@@ -32,6 +35,16 @@ class LolCode {
 
   def HAI() = {
     lines = new HashMap[Int, LolLine]
+  }
+
+  def NOWAI() = {
+    lines(current) = StartFalse(current)
+    current += 1
+  }
+
+  def KTHX() = {
+    lines(current) = EndIf(current)
+    current += 1
   }
 
   /**
@@ -133,6 +146,20 @@ class LolCode {
       case ErrorPrintFunction(_, s: Function0[Int]) => {
         Console.err.println(Console.RED + s() + Console.RESET)
         gotoLine(line + 1)
+      }
+      case StartFalse(_) => {
+	// Only reach this if true was executed
+	var lineVar = line
+	while(!lines(lineVar).isInstanceOf[EndIf]) {
+	    lineVar = lineVar + 1;
+	}
+	gotoLine(lineVar+1);
+      }
+      case EndIf(_) => {
+        gotoLine(line+1);
+      }
+      case Pass(_) => {
+	gotoLine(line+1);
       }
       case Assign(_, fn: Function0[Unit]) =>
         {
@@ -293,6 +320,20 @@ class LolCode {
 
   object BTW {
     def apply(s: Any) = {}
+  }
+
+  object IZ {
+    def apply(s: Int) = {
+      if(s == 10) {
+	lines(current) = Pass(current)
+	current += 1
+      } else {
+	while(!(lines(current).isInstanceOf[StartFalse] || lines(current).isInstanceOf[EndIf])) {
+	  current += 1
+	}
+	current += 1
+      }
+    }
   }
 
   class Bindings[U] {

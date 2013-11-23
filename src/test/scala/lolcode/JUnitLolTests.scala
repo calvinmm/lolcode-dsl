@@ -222,4 +222,13 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector("show", "show")
     assertEquals(expected, output)
   }
+
+  @Test
+  def test_if_pass {
+    val command: String = "make specific-test O=LolTest_IZ_PASS"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(5).map(_.toString)
+    assertEquals(expected, output)
+  }
 }
