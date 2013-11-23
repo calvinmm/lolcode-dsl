@@ -73,7 +73,16 @@ class JUnitLolTests {
     val command: String = "make specific-test O=LolTest_Int_IntAssign"
     val output = run_test(command)
 
-    val expected: Vector[String] = Vector(1, 1+1, (1+1)*4).map(_.toString)
+    val expected: Vector[String] = Vector(1).map(_.toString) ++ Vector(2.0, 8.0).map(_.toString)
+    assertEquals(expected, output)
+  }
+  
+  @Test
+  def test_int_double_assign {
+    val command: String = "make specific-test O=LolTest_Int_DoubleAssign"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector((1+1.2) * 4).map(_.toString)
     assertEquals(expected, output)
   }
 

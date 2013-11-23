@@ -23,7 +23,7 @@ class LolCode {
   var current: Int = 1
 
   var lines = new HashMap[Int, LolLine]
-  val binds = new Bindings[String, Int]
+  val binds = new Bindings[AnyVal]
 
   def KTHXBYE() = {
     lines(current) = End(current)
@@ -144,32 +144,6 @@ class LolCode {
     }
   }
 
-  // prefix operators
-  // TODO: Prefix math ops need to be deferred
-  def UP(i: Int, j: Int): Int = { i + j }
-  def NERF(i: Int, j: Int): Int = { i - j }
-  def TIEMZ(i: Int, j: Int): Int = { i * j }
-  def OVAR(i: Int, j: Int): Int = { i / j }
-  def MOD(i: Int, j: Int): Int = { i % j }
-
-  def UP(i: Int, j: Double): Double = { i + j }
-  def NERF(i: Int, j: Double): Double = { i - j }
-  def TIEMZ(i: Int, j: Double): Double = { i * j }
-  def OVAR(i: Int, j: Double): Double = { i / j }
-  def MOD(i: Int, j: Double): Double = { i % j }
-
-  def UP(i: Double, j: Int): Double = { i + j }
-  def NERF(i: Double, j: Int): Double = { i - j }
-  def TIEMZ(i: Double, j: Int): Double = { i * j }
-  def OVAR(i: Double, j: Int): Double = { i / j }
-  def MOD(i: Double, j: Int): Double = { i % j }
-
-  def UP(i: Double, j: Double): Double = { i + j }
-  def NERF(i: Double, j: Double): Double = { i - j }
-  def TIEMZ(i: Double, j: Double): Double = { i * j }
-  def OVAR(i: Double, j: Double): Double = { i / j }
-  def MOD(i: Double, j: Double): Double = { i % j }
-
   // infix operators
   implicit def operator_int(i: Int) = new {
     def UP(j: Int): Function0[Int] = { () => (i + j) }
@@ -182,11 +156,6 @@ class LolCode {
     def TIEMZ(j: Double): Function0[Double] = { () => (i * j) }
     def OVAR(j: Double): Function0[Double] = { () => (i / j) }
     def MOD(j: Double): Function0[Double] = { () => (i % j) }
-    def UP(j: Symbol): Function0[Int] = { () => (i + binds.num(j)) }
-    def NERF(j: Symbol): Function0[Int] = { () => (i - binds.num(j)) }
-    def TIEMZ(j: Symbol): Function0[Int] = { () => (i * binds.num(j)) }
-    def OVAR(j: Symbol): Function0[Int] = { () => (i / binds.num(j)) }
-    def MOD(j: Symbol): Function0[Int] = { () => (i % binds.num(j)) }
     def UP(j: Function0[Int]): Function0[Int] = { () => (i + j()) }
     def NERF(j: Function0[Int]): Function0[Int] = { () => (i - j()) }
     def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (i * j()) }
@@ -218,26 +187,12 @@ class LolCode {
   }
 
   implicit def operator_symbol(i: Symbol) = new {
-    def UP(j: Int): Function0[Int] = { () => binds.num(i) + j }
-    def NERF(j: Int): Function0[Int] = { () => binds.num(i) - j }
-    def TIEMZ(j: Int): Function0[Int] = { () => binds.num(i) * j }
-    def OVAR(j: Int): Function0[Int] = { () => binds.num(i) / j }
-    def MOD(j: Int): Function0[Int] = { () => binds.num(i) % j }
+    def TIEMZ(j: Int): Function0[Double] = { () => binds.num(i) * j }
     def UP(j: Double): Function0[Double] = { () => binds.num(i) + j }
     def NERF(j: Double): Function0[Double] = { () => binds.num(i) - j }
     def TIEMZ(j: Double): Function0[Double] = { () => binds.num(i) * j }
     def OVAR(j: Double): Function0[Double] = { () => binds.num(i) / j }
     def MOD(j: Double): Function0[Double] = { () => binds.num(i) % j }
-    def UP(j: Symbol): Function0[Int] = { () => binds.num(i) + binds.num(j) }
-    def NERF(j: Symbol): Function0[Int] = { () => binds.num(i) - binds.num(j) }
-    def TIEMZ(j: Symbol): Function0[Int] = { () => binds.num(i) * binds.num(j) }
-    def OVAR(j: Symbol): Function0[Int] = { () => binds.num(i) / binds.num(j) }
-    def MOD(j: Symbol): Function0[Int] = { () => binds.num(i) % binds.num(j) }
-    def UP(j: Function0[Int]): Function0[Int] = { () => (binds.num(i) + j()) }
-    def NERF(j: Function0[Int]): Function0[Int] = { () => (binds.num(i) - j()) }
-    def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (binds.num(i) * j()) }
-    def OVAR(j: Function0[Int]): Function0[Int] = { () => (binds.num(i) / j()) }
-    def MOD(j: Function0[Int]): Function0[Int] = { () => (binds.num(i) % j()) }
   }
 
   implicit def operator_function(i: Function0[Int]) = new {
@@ -251,11 +206,6 @@ class LolCode {
     def TIEMZ(j: Double): Function0[Double] = { () => (i() * j) }
     def OVAR(j: Double): Function0[Double] = { () => (i() / j) }
     def MOD(j: Double): Function0[Double] = { () => (i() % j) }
-    def UP(j: Symbol): Function0[Int] = { () => (i() + binds.num(j)) }
-    def NERF(j: Symbol): Function0[Int] = { () => (i() - binds.num(j)) }
-    def TIEMZ(j: Symbol): Function0[Int] = { () => (i() * binds.num(j)) }
-    def OVAR(j: Symbol): Function0[Int] = { () => (i() / binds.num(j)) }
-    def MOD(j: Symbol): Function0[Int] = { () => (i() % binds.num(j)) }
     def UP(j: Function0[Int]): Function0[Int] = { () => (i() + j()) }
     def NERF(j: Function0[Int]): Function0[Int] = { () => (i() - j()) }
     def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (i() * j()) }
@@ -345,23 +295,23 @@ class LolCode {
     def apply(s: Any) = {}
   }
 
-  class Bindings[T, U] {
-    val atoms = HashMap[Symbol, T]()
+  class Bindings[U] {
     val numerics = HashMap[Symbol, U]()
 
-    def set[X >: T with U](k: Symbol, v: X) = v match {
+    def set[X >: U](k: Symbol, v: X) = v match {
       case u: U => numerics(k) = u
-      case t: T => atoms(k) = t
     }
-    def atom(k: Symbol): T = atoms(k)
-    def num(k: Symbol): U = numerics(k)
+    def num(k: Symbol): Double = {
+      numerics(k) match {
+        case j: Int => j.toDouble
+        case j: Double => j
+      }
+    }
 
     def any(k: Symbol): Any = {
-      (atoms.get(k), numerics.get(k)) match {
-        case (Some(x), None) => x
-        case (None, Some(y)) => y
-        case (None, None) => None
-        case (Some(x), Some(y)) => Some(x, y)
+      numerics.get(k) match {
+        case Some(x) => x
+        case None => None
       }
     }
   }
