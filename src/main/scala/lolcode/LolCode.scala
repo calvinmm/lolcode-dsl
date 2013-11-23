@@ -209,7 +209,7 @@ class LolCode {
     def NERF(j: Symbol): Function0[Double] = { () => i - binds.num(j) }
     def TIEMZ(j: Symbol): Function0[Double] = { () => i * binds.num(j) }
     def OVAR(j: Symbol): Function0[Double] = { () => i / binds.num(j) }
-    def MOD(j: Symbol): Function0[Double] = { () => i % binds.num(j) }    
+    def MOD(j: Symbol): Function0[Double] = { () => i % binds.num(j) }
     def UP(j: Function0[Int]): Function0[Double] = { () => (i + j()) }
     def NERF(j: Function0[Int]): Function0[Double] = { () => (i - j()) }
     def TIEMZ(j: Function0[Int]): Function0[Double] = { () => (i * j()) }
@@ -232,7 +232,7 @@ class LolCode {
     def NERF(j: Symbol): Function0[Int] = { () => binds.num(i) - binds.num(j) }
     def TIEMZ(j: Symbol): Function0[Int] = { () => binds.num(i) * binds.num(j) }
     def OVAR(j: Symbol): Function0[Int] = { () => binds.num(i) / binds.num(j) }
-    def MOD(j: Symbol): Function0[Int] = { () => binds.num(i) % binds.num(j) }    
+    def MOD(j: Symbol): Function0[Int] = { () => binds.num(i) % binds.num(j) }
     def UP(j: Function0[Int]): Function0[Int] = { () => (binds.num(i) + j()) }
     def NERF(j: Function0[Int]): Function0[Int] = { () => (binds.num(i) - j()) }
     def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (binds.num(i) * j()) }
@@ -313,7 +313,7 @@ class LolCode {
       1
     }
   }
-  
+
   object COMPLAIN {
     def apply(s: String) = {
       lines(current) = ErrorPrintString(current, s)

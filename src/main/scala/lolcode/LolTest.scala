@@ -31,13 +31,14 @@ object LolTest_IntAssign extends LolCode {
   }
 }
 
-object LolTest_Test extends LolCode {
+object LolTest_Int_IntAssign extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
     I_HAZ_A('a) ITZ 1
     VISIBLE('a)
     I_HAZ_A('b) R ('a UP 1)
     VISIBLE('b)
+    VISIBLE('b TIEMZ 4)
     KTHXBYE
   }
 }
