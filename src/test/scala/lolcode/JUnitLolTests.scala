@@ -131,6 +131,17 @@ class JUnitLolTests {
     assertEquals(expected, output)
   }
 
+//This test fails until we have order of operations done correctly
+/*
+  @Test
+  def test_math_up_tiemz {
+    val command: String = "make specific-test O=LolTest_Math_Up_Tiemz"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(13 + 100 * 12).map(_.toString)
+    assertEquals(expected, output)
+  }*/
+
   @Test
   def test_math_nerf {
     val command: String = "make specific-test O=LolTest_Math_Nerf"

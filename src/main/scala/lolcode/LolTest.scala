@@ -105,6 +105,16 @@ object LolTest_Math_Double_Up extends LolCode {
   }
 }
 
+// This test will fail until we obey order of operations
+object LolTest_Math_Up_Tiemz extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('a) ITZ (13 UP 100 TIEMZ 12)
+    VISIBLE('a)
+    KTHXBYE
+  }
+}
+
 object LolTest_Math_Nerf extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
