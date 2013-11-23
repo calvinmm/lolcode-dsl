@@ -18,6 +18,7 @@ class JUnitLolTests {
       .map(x => x.trim())
       .filterNot(_.startsWith("["))
       .filterNot(_.equals(""))
+      .filterNot(_.startsWith("make["))
   }
 
   def run_test_error(command: String): Vector[String] = {
@@ -36,6 +37,7 @@ class JUnitLolTests {
       .map(x => x.replace("[31m", ""))
       .filterNot(_.startsWith("["))
       .filterNot(_.equals(""))
+      .filterNot(_.startsWith("make["))
   }
 
   @Test
@@ -44,7 +46,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector("hello world", 3, 4.5).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -54,7 +56,7 @@ class JUnitLolTests {
 
     val expected: Vector[String] =
       Vector("hello world", "goodbye world" + Console.RESET, 10.2 + Console.RESET).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -63,7 +65,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(1, 1337).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
   
   @Test
@@ -72,7 +74,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(1, 1+1, (1+1)*4).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -81,7 +83,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector("cat", "doge")
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -90,7 +92,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector("kitteh", "cat")
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -99,7 +101,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(3.5, 10.2).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -108,7 +110,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(2 + 3, 1 + 100).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -117,7 +119,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(2.5 + 3, 1.2 + 100).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -126,7 +128,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(13 - 2, 1337 - 1000 - 12).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -135,7 +137,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(13.2 - 2.1, 1337.3 - 1000.2 - 32.5).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -144,7 +146,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(3 * 3, 3 * 20).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -153,7 +155,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(3.3 * 3.3, 3 * 20.2).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -162,7 +164,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(9 / 3, 100 / 10).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -171,7 +173,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(9.3 / 3, 100.1 / 3.4).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -180,7 +182,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(9 % 3, 25 % 10).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -189,7 +191,7 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(9.2 % 3.9, 12.3 % 2.3).map(_.toString)
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 
   @Test
@@ -198,6 +200,6 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector("show", "show")
-    assertEquals(output, expected)
+    assertEquals(expected, output)
   }
 }
