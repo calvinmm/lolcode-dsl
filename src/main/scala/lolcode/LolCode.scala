@@ -20,6 +20,7 @@ class LolCode {
   case class EndIf(num: Int) extends LolLine
   case class JumpTrue(num: Int) extends LolLine
   case class Pass(num: Int) extends LolLine
+  case class If(num: Int, s: Symbol) extends LolLine
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
   case class End(num: Int) extends LolLine
 
@@ -169,6 +170,20 @@ class LolCode {
       case Pass(_) => {
 	gotoLine(line+1);
       }
+
+      case If(_, s: Symbol) => {
+        val num = binds.num(s)
+        if(num == 4.0) {
+          gotoLine(line + 1)
+        } else {
+          var curLine = line
+	  while(!(lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])) {
+	    curLine += 1
+	  }
+	  gotoLine(curLine+1)
+        }
+      }
+        
       case Assign(_, fn: Function0[Unit]) =>
         {
           fn()
@@ -337,6 +352,11 @@ class LolCode {
       } else {
 	lines(current) = JumpTrue(current)
       }
+      current += 1
+    }
+
+    def apply(s: Symbol) = {
+      lines(current) = If(current, s)
       current += 1
     }
   }

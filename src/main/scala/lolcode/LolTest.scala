@@ -236,3 +236,18 @@ object LolTest_IZ_FALSE extends LolCode {
     KTHXBYE
   }
 }
+
+object LolTest_IZ_SYMBOL extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('num) ITZ 7
+    IZ('num)
+      LOL('num) R 5
+    NOWAI
+      LOL('num) R 2
+    KTHX
+    VISIBLE('num)
+    KTHXBYE
+  }
+}
+
