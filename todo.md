@@ -7,18 +7,19 @@
 3. :white_check_mark: ~~Math (Int)~~
 4. :white_check_mark: ~~Variables (Int)~~
 5. :white_check_mark: ~~Variables (String)~~
-6. :white_check_mark: ~~Variables (Double)~~
-7. :white_check_mark: ~~Math (Double)~~
-8. :white_check_mark: ~~Stderr Printing~~
-9. :white_check_mark: ~~Math with variables~~
-10. If Statements
-11. Loops
-12. Max/Min
+6. :white_check_mark: ~~Stderr Printing~~
+7. :white_check_mark: ~~Math with variables~~
+8. :white_check_mark: ~~Boolean operators~~
+9. If Statements
+10. Loops
+11. Max/Min
 
 ### Stretch Goals
 
-1. Functions
-2. Switch Statements
-3. Nested Anything
-4. Files
-5. User Input
+1. Variables (Double)
+2. Math (Double)
+3. Functions
+4. Switch Statements
+5. Nested Anything
+6. Files
+7. User Input

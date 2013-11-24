@@ -8,13 +8,10 @@ class LolCode {
   case class PrintString(num: Int, s: String) extends LolLine
   case class PrintVariable(num: Int, s: Symbol) extends LolLine
   case class PrintNumber(num: Int, s: Int) extends LolLine
-  case class PrintDouble(num: Int, s: Double) extends LolLine
   case class PrintFunction(num: Int, s: Function0[Int]) extends LolLine
-  case class PrintFunctionDouble(num: Int, s: Function0[Double]) extends LolLine
   case class ErrorPrintString(num: Int, s: String) extends LolLine
   case class ErrorPrintVariable(num: Int, s: Symbol) extends LolLine
   case class ErrorPrintNumber(num: Int, s: Int) extends LolLine
-  case class ErrorPrintDouble(num: Int, s: Double) extends LolLine
   case class ErrorPrintFunction(num: Int, s: Function0[Int]) extends LolLine
   case class If(num: Int, fun: Function0[Boolean]) extends LolLine
   case class StartFalse(num: Int) extends LolLine
@@ -26,8 +23,8 @@ class LolCode {
   var current: Int = 1
 
   var lines = new HashMap[Int, LolLine]
-  val binds = new Bindings[AnyVal]
-  
+  val binds = new Bindings
+
   def KTHXBYE() = {
     lines(current) = End(current)
     gotoLine(lines.keys.toList.sorted.head)
@@ -59,18 +56,9 @@ class LolCode {
       lines(current) = Assign(current, (() => binds.set(sym, v)))
       current += 1
     }
-    def ITZ(v: Double): Unit = {
-      lines(current) = Assign(current, (() => binds.set(sym, v)))
-      current += 1
-    }
     def ITZ(v: Function0[Int]): Unit = {
       lines(current) = Assign(current, (() => binds.set(sym, v())))
       current += 1
-    }
-    def ITZ(v: Function0[Double]): Int = {
-      lines(current) = Assign(current, (() => binds.set(sym, v())))
-      current += 1
-      1
     }
 
     def R(v: String): Unit = {
@@ -81,18 +69,9 @@ class LolCode {
       lines(current) = Assign(current, (() => binds.set(sym, v)))
       current += 1
     }
-    def R(v: Double): Unit = {
-      lines(current) = Assign(current, (() => binds.set(sym, v)))
-      current += 1
-    }
     def R(v: Function0[Int]): Unit = {
       lines(current) = Assign(current, (() => binds.set(sym, v())))
       current += 1
-    }
-    def R(v: Function0[Double]): Int = {
-      lines(current) = Assign(current, (() => binds.set(sym, v())))
-      current += 1
-      1
     }
   }
 
@@ -114,15 +93,7 @@ class LolCode {
         println(s)
         gotoLine(line + 1)
       }
-      case PrintDouble(_, s: Double) => {
-        println(s)
-        gotoLine(line + 1)
-      }
       case PrintFunction(_, s: Function0[Int]) => {
-        println(s())
-        gotoLine(line + 1)
-      }
-      case PrintFunctionDouble(_, s: Function0[Double]) => {
         println(s())
         gotoLine(line + 1)
       }
@@ -139,40 +110,32 @@ class LolCode {
         Console.err.println(Console.RED + s + Console.RESET)
         gotoLine(line + 1)
       }
-      case ErrorPrintDouble(_, s: Double) => {
-        Console.err.println(Console.RED + s + Console.RESET)
-        gotoLine(line + 1)
-      }
-      case ErrorPrintFunction(_, s: Function0[Int]) => {
-        Console.err.println(Console.RED + s() + Console.RESET)
-        gotoLine(line + 1)
-      }
 
       case If(_, fun: Function0[Boolean]) => {
-        if(fun()) {
+        if (fun()) {
           gotoLine(line + 1)
         } else {
           var curLine = line
-	  while(!(lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])) {
-	    curLine += 1
-	  }
-	  gotoLine(curLine+1)
+          while (!(lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])) {
+            curLine += 1
+          }
+          gotoLine(curLine + 1)
         }
       }
 
       case StartFalse(_) => {
-	// Only reach this if true was executed
-	var lineVar = line
-	while(!lines(lineVar).isInstanceOf[EndIf]) {
-	    lineVar = lineVar + 1;
-	}
-	gotoLine(lineVar+1);
+        // Only reach this if true was executed
+        var lineVar = line
+        while (!lines(lineVar).isInstanceOf[EndIf]) {
+          lineVar = lineVar + 1;
+        }
+        gotoLine(lineVar + 1);
       }
 
       case EndIf(_) => {
-        gotoLine(line+1);
+        gotoLine(line + 1);
       }
-        
+
       case Assign(_, fn: Function0[Unit]) =>
         {
           fn()
@@ -193,11 +156,6 @@ class LolCode {
     def BIGR_THAN(j: Int): Function0[Boolean] = { () => (i > j) }
     def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (i < j) }
     def LIEK(j: Int): Function0[Boolean] = { () => (i == j) }
-    def UP(j: Double): Function0[Double] = { () => (i + j) }
-    def NERF(j: Double): Function0[Double] = { () => (i - j) }
-    def TIEMZ(j: Double): Function0[Double] = { () => (i * j) }
-    def OVAR(j: Double): Function0[Double] = { () => (i / j) }
-    def MOD(j: Double): Function0[Double] = { () => (i % j) }
     def UP(j: Function0[Int]): Function0[Int] = { () => (i + j()) }
     def NERF(j: Function0[Int]): Function0[Int] = { () => (i - j()) }
     def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (i * j()) }
@@ -205,39 +163,15 @@ class LolCode {
     def MOD(j: Function0[Int]): Function0[Int] = { () => (i % j()) }
   }
 
-  implicit def operator_double(i: Double) = new {
-    def UP(j: Int): Function0[Double] = { () => (i + j) }
-    def NERF(j: Int): Function0[Double] = { () => (i - j) }
-    def TIEMZ(j: Int): Function0[Double] = { () => (i * j) }
-    def OVAR(j: Int): Function0[Double] = { () => (i / j) }
-    def MOD(j: Int): Function0[Double] = { () => (i % j) }
-    def UP(j: Double): Function0[Double] = { () => (i + j) }
-    def NERF(j: Double): Function0[Double] = { () => (i - j) }
-    def TIEMZ(j: Double): Function0[Double] = { () => (i * j) }
-    def OVAR(j: Double): Function0[Double] = { () => (i / j) }
-    def MOD(j: Double): Function0[Double] = { () => i % j }
-    def UP(j: Symbol): Function0[Double] = { () => i + binds.num(j) }
-    def NERF(j: Symbol): Function0[Double] = { () => i - binds.num(j) }
-    def TIEMZ(j: Symbol): Function0[Double] = { () => i * binds.num(j) }
-    def OVAR(j: Symbol): Function0[Double] = { () => i / binds.num(j) }
-    def MOD(j: Symbol): Function0[Double] = { () => i % binds.num(j) }
-    def UP(j: Function0[Int]): Function0[Double] = { () => (i + j()) }
-    def NERF(j: Function0[Int]): Function0[Double] = { () => (i - j()) }
-    def TIEMZ(j: Function0[Int]): Function0[Double] = { () => (i * j()) }
-    def OVAR(j: Function0[Int]): Function0[Double] = { () => (i / j()) }
-    def MOD(j: Function0[Int]): Function0[Double] = { () => (i % j()) }
-  }
-
   implicit def operator_symbol(i: Symbol) = new {
-    def TIEMZ(j: Int): Function0[Double] = { () => binds.num(i) * j }
     def BIGR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) > j) }
     def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) < j) }
     def LIEK(j: Int): Function0[Boolean] = { () => (binds.num(i) == j) }
-    def UP(j: Double): Function0[Double] = { () => binds.num(i) + j }
-    def NERF(j: Double): Function0[Double] = { () => binds.num(i) - j }
-    def TIEMZ(j: Double): Function0[Double] = { () => binds.num(i) * j }
-    def OVAR(j: Double): Function0[Double] = { () => binds.num(i) / j }
-    def MOD(j: Double): Function0[Double] = { () => binds.num(i) % j }
+    def UP(j: Int): Function0[Int] = { () => binds.num(i) + j }
+    def NERF(j: Int): Function0[Int] = { () => binds.num(i) - j }
+    def TIEMZ(j: Int): Function0[Int] = { () => binds.num(i) * j }
+    def OVAR(j: Int): Function0[Int] = { () => binds.num(i) / j }
+    def MOD(j: Int): Function0[Int] = { () => binds.num(i) % j }
   }
 
   implicit def operator_function(i: Function0[Int]) = new {
@@ -246,39 +180,11 @@ class LolCode {
     def TIEMZ(j: Int): Function0[Int] = { () => (i() * j) }
     def OVAR(j: Int): Function0[Int] = { () => (i() / j) }
     def MOD(j: Int): Function0[Int] = { () => (i() % j) }
-    def UP(j: Double): Function0[Double] = { () => (i() + j) }
-    def NERF(j: Double): Function0[Double] = { () => (i() - j) }
-    def TIEMZ(j: Double): Function0[Double] = { () => (i() * j) }
-    def OVAR(j: Double): Function0[Double] = { () => (i() / j) }
-    def MOD(j: Double): Function0[Double] = { () => (i() % j) }
     def UP(j: Function0[Int]): Function0[Int] = { () => (i() + j()) }
     def NERF(j: Function0[Int]): Function0[Int] = { () => (i() - j()) }
     def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (i() * j()) }
     def OVAR(j: Function0[Int]): Function0[Int] = { () => (i() / j()) }
     def MOD(j: Function0[Int]): Function0[Int] = { () => (i() % j()) }
-  }
-
-  implicit def operator_function_d(i: Function0[Double]) = new {
-    def UP(j: Int): Function0[Double] = { () => (i() + j) }
-    def NERF(j: Int): Function0[Double] = { () => (i() - j) }
-    def TIEMZ(j: Int): Function0[Double] = { () => (i() * j) }
-    def OVAR(j: Int): Function0[Double] = { () => (i() / j) }
-    def MOD(j: Int): Function0[Double] = { () => (i() % j) }
-    def UP(j: Double): Function0[Double] = { () => (i() + j) }
-    def NERF(j: Double): Function0[Double] = { () => (i() - j) }
-    def TIEMZ(j: Double): Function0[Double] = { () => (i() * j) }
-    def OVAR(j: Double): Function0[Double] = { () => (i() / j) }
-    def MOD(j: Double): Function0[Double] = { () => (i() % j) }
-    def UP(j: Symbol): Function0[Double] = { () => (i() + binds.num(j)) }
-    def NERF(j: Symbol): Function0[Double] = { () => (i() - binds.num(j)) }
-    def TIEMZ(j: Symbol): Function0[Double] = { () => (i() * binds.num(j)) }
-    def OVAR(j: Symbol): Function0[Double] = { () => (i() / binds.num(j)) }
-    def MOD(j: Symbol): Function0[Double] = { () => (i() % binds.num(j)) }
-    def UP(j: Function0[Int]): Function0[Double] = { () => (i() + j()) }
-    def NERF(j: Function0[Int]): Function0[Double] = { () => (i() - j()) }
-    def TIEMZ(j: Function0[Int]): Function0[Double] = { () => (i() * j()) }
-    def OVAR(j: Function0[Int]): Function0[Double] = { () => (i() / j()) }
-    def MOD(j: Function0[Int]): Function0[Double] = { () => (i() % j()) }
   }
 
   object VISIBLE {
@@ -294,18 +200,9 @@ class LolCode {
       lines(current) = PrintNumber(current, s)
       current += 1
     }
-    def apply(s: Double) = {
-      lines(current) = PrintDouble(current, s)
-      current += 1
-    }
     def apply(s: Function0[Int]) = {
       lines(current) = PrintFunction(current, s)
       current += 1
-    }
-    def apply(s: Function0[Double]): Int = {
-      lines(current) = PrintFunctionDouble(current, s)
-      current += 1
-      1
     }
   }
 
@@ -322,10 +219,6 @@ class LolCode {
       lines(current) = ErrorPrintNumber(current, s)
       current += 1
     }
-    def apply(s: Double) = {
-      lines(current) = ErrorPrintDouble(current, s)
-      current += 1
-    }
   }
 
   object I_HAZ_A {
@@ -340,7 +233,7 @@ class LolCode {
     def apply(s: Any) = {}
   }
 
-  object IZ {    
+  object IZ {
     def apply(s: Function0[Boolean]) = {
       lines(current) = If(current, s)
       current += 1
@@ -348,23 +241,49 @@ class LolCode {
   }
 
   class Bindings[U] {
-    val numerics = HashMap[Symbol, U]()
+    val bindings = HashMap[Symbol, Any]()
 
-    def set[X >: U](k: Symbol, v: X) = v match {
-      case u: U => numerics(k) = u
+    /**
+     * set a value in our map
+     */
+    def set(k: Symbol, v: Any): Unit = {
+      bindings(k) = v;
     }
-    def num(k: Symbol): Double = {
-      numerics(k) match {
-        case j: Int => j.toDouble
-        case j: Double => j
+
+    /**
+     * only returns integers
+     */
+    def num(k: Symbol): Int = {
+      any(k) match {
+        case n: Int => n
+        case _ => throw new RuntimeException(f"Variable $k does not exist or is not an integer")
       }
     }
 
+    /**
+     * WARNING: don't use yet
+     * returns ints and doubles
+     */
+    def anyval(k: Symbol): AnyVal = {
+      any(k) match {
+        case n: Int => n
+        case n: Double => n
+        case _ => throw new RuntimeException(f"Variable $k does not exist as type AnyVal")
+      }
+    }
+
+    /**
+     * returns anything
+     */
     def any(k: Symbol): Any = {
-      numerics.get(k) match {
+      bindings.get(k) match {
         case Some(x) => x
         case None => None
       }
+    }
+
+    override def toString: String = {
+      bindings.toString
     }
   }
 }
