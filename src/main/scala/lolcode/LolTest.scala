@@ -208,11 +208,25 @@ object LolTest_BTW extends LolCode {
   }
 }
 
-object LolTest_IZ_PASS extends LolCode {
+object LolTest_IZ_TRUE_NUMS extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
     I_HAZ_A('num) ITZ 4
-    IZ('num)
+    IZ(4 LIEK 4)
+      LOL('num) R 5
+    NOWAI
+      LOL('num) R 6
+    KTHX
+    VISIBLE('num)
+    KTHXBYE
+  }
+}
+
+object LolTest_IZ_FALSE_NUMS extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('num) ITZ 4
+    IZ(4 BIGR_THAN 4)
       LOL('num) R 5
     NOWAI
       LOL('num) R 6
@@ -223,11 +237,25 @@ object LolTest_IZ_PASS extends LolCode {
 }
 
 
-object LolTest_IZ_FALSE extends LolCode {
+object LolTest_IZ_TRUE_VAR extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
-    I_HAZ_A('num) ITZ 3
-    IZ('num)
+    I_HAZ_A('num) ITZ 4
+    IZ('num LIEK 4)
+      LOL('num) R 5
+    NOWAI
+      LOL('num) R 6
+    KTHX
+    VISIBLE('num)
+    KTHXBYE
+  }
+}
+
+object LolTest_IZ_FALSE_VAR extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('num) ITZ 4
+    IZ('num SMALLR_THAN 4)
       LOL('num) R 5
     NOWAI
       LOL('num) R 6

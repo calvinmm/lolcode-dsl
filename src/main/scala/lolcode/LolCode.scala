@@ -16,7 +16,7 @@ class LolCode {
   case class ErrorPrintNumber(num: Int, s: Int) extends LolLine
   case class ErrorPrintDouble(num: Int, s: Double) extends LolLine
   case class ErrorPrintFunction(num: Int, s: Function0[Int]) extends LolLine
-  case class If(num: Int, s: Symbol) extends LolLine
+  case class If(num: Int, fun: Function0[Boolean]) extends LolLine
   case class StartFalse(num: Int) extends LolLine
   case class EndIf(num: Int) extends LolLine
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
@@ -148,9 +148,8 @@ class LolCode {
         gotoLine(line + 1)
       }
 
-      case If(_, s: Symbol) => {
-        val num = binds.num(s)
-        if(num == 4.0) {
+      case If(_, fun: Function0[Boolean]) => {
+        if(fun()) {
           gotoLine(line + 1)
         } else {
           var curLine = line
@@ -341,8 +340,8 @@ class LolCode {
     def apply(s: Any) = {}
   }
 
-  object IZ {
-    def apply(s: Symbol) = {
+  object IZ {    
+    def apply(s: Function0[Boolean]) = {
       lines(current) = If(current, s)
       current += 1
     }

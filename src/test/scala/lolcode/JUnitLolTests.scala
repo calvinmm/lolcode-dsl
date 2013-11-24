@@ -224,8 +224,8 @@ class JUnitLolTests {
   }
 
   @Test
-  def test_if_pass {
-    val command: String = "make specific-test O=LolTest_IZ_PASS"
+  def test_if_true_nums {
+    val command: String = "make specific-test O=LolTest_IZ_TRUE_NUMS"
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(5).map(_.toString)
@@ -233,8 +233,27 @@ class JUnitLolTests {
   }
 
   @Test
-  def test_if_fail {
-    val command: String = "make specific-test O=LolTest_IZ_FALSE"
+  def test_if_false_nums {
+    val command: String = "make specific-test O=LolTest_IZ_FALSE_NUMS"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(6).map(_.toString)
+    assertEquals(expected, output)
+  }
+
+  
+  @Test
+  def test_if_true_var {
+    val command: String = "make specific-test O=LolTest_IZ_TRUE_VAR"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(5).map(_.toString)
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_if_false_var {
+    val command: String = "make specific-test O=LolTest_IZ_FALSE_VAR"
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(6).map(_.toString)
