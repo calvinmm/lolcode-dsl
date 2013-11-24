@@ -212,7 +212,7 @@ object LolTest_IZ_PASS extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
     I_HAZ_A('num) ITZ 4
-    IZ(10)
+    IZ('num)
       LOL('num) R 5
     NOWAI
       LOL('num) R 6
@@ -226,8 +226,8 @@ object LolTest_IZ_PASS extends LolCode {
 object LolTest_IZ_FALSE extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
-    I_HAZ_A('num) ITZ 4
-    IZ(9)
+    I_HAZ_A('num) ITZ 3
+    IZ('num)
       LOL('num) R 5
     NOWAI
       LOL('num) R 6
@@ -236,18 +236,3 @@ object LolTest_IZ_FALSE extends LolCode {
     KTHXBYE
   }
 }
-
-object LolTest_IZ_SYMBOL extends LolCode {
-  def main(args: Array[String]): Unit = {
-    HAI
-    I_HAZ_A('num) ITZ 7
-    IZ('num)
-      LOL('num) R 5
-    NOWAI
-      LOL('num) R 2
-    KTHX
-    VISIBLE('num)
-    KTHXBYE
-  }
-}
-

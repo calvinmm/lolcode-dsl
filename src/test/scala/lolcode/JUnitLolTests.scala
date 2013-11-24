@@ -240,13 +240,4 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(6).map(_.toString)
     assertEquals(expected, output)
   }
-
-  @Test
-  def test_if_fail {
-    val command: String = "make specific-test O=LolTest_IZ_SYMBOL"
-    val output = run_test(command)
-
-    val expected: Vector[String] = Vector(6).map(_.toString)
-    assertEquals(expected, output)
-  }
 }

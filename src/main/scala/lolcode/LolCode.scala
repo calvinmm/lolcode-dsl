@@ -16,11 +16,9 @@ class LolCode {
   case class ErrorPrintNumber(num: Int, s: Int) extends LolLine
   case class ErrorPrintDouble(num: Int, s: Double) extends LolLine
   case class ErrorPrintFunction(num: Int, s: Function0[Int]) extends LolLine
+  case class If(num: Int, s: Symbol) extends LolLine
   case class StartFalse(num: Int) extends LolLine
   case class EndIf(num: Int) extends LolLine
-  case class JumpTrue(num: Int) extends LolLine
-  case class Pass(num: Int) extends LolLine
-  case class If(num: Int, s: Symbol) extends LolLine
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
   case class End(num: Int) extends LolLine
 
@@ -149,27 +147,6 @@ class LolCode {
         Console.err.println(Console.RED + s() + Console.RESET)
         gotoLine(line + 1)
       }
-      case StartFalse(_) => {
-	// Only reach this if true was executed
-	var lineVar = line
-	while(!lines(lineVar).isInstanceOf[EndIf]) {
-	    lineVar = lineVar + 1;
-	}
-	gotoLine(lineVar+1);
-      }
-      case JumpTrue(_) => {
-	var curLine = line
-	while(!(lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])) {
-	  curLine += 1
-	}
-	gotoLine(curLine+1)
-      }
-      case EndIf(_) => {
-        gotoLine(line+1);
-      }
-      case Pass(_) => {
-	gotoLine(line+1);
-      }
 
       case If(_, s: Symbol) => {
         val num = binds.num(s)
@@ -182,6 +159,19 @@ class LolCode {
 	  }
 	  gotoLine(curLine+1)
         }
+      }
+
+      case StartFalse(_) => {
+	// Only reach this if true was executed
+	var lineVar = line
+	while(!lines(lineVar).isInstanceOf[EndIf]) {
+	    lineVar = lineVar + 1;
+	}
+	gotoLine(lineVar+1);
+      }
+
+      case EndIf(_) => {
+        gotoLine(line+1);
       }
         
       case Assign(_, fn: Function0[Unit]) =>
@@ -201,6 +191,9 @@ class LolCode {
     def TIEMZ(j: Int): Function0[Int] = { () => (i * j) }
     def OVAR(j: Int): Function0[Int] = { () => (i / j) }
     def MOD(j: Int): Function0[Int] = { () => (i % j) }
+    def BIGR_THAN(j: Int): Function0[Boolean] = { () => (i > j) }
+    def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (i < j) }
+    def LIEK(j: Int): Function0[Boolean] = { () => (i == j) }
     def UP(j: Double): Function0[Double] = { () => (i + j) }
     def NERF(j: Double): Function0[Double] = { () => (i - j) }
     def TIEMZ(j: Double): Function0[Double] = { () => (i * j) }
@@ -238,6 +231,9 @@ class LolCode {
 
   implicit def operator_symbol(i: Symbol) = new {
     def TIEMZ(j: Int): Function0[Double] = { () => binds.num(i) * j }
+    def BIGR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) > j) }
+    def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) < j) }
+    def LIEK(j: Int): Function0[Boolean] = { () => (binds.num(i) == j) }
     def UP(j: Double): Function0[Double] = { () => binds.num(i) + j }
     def NERF(j: Double): Function0[Double] = { () => binds.num(i) - j }
     def TIEMZ(j: Double): Function0[Double] = { () => binds.num(i) * j }
@@ -346,15 +342,6 @@ class LolCode {
   }
 
   object IZ {
-    def apply(s: Int) = {
-      if(s == 10) {
-	lines(current) = Pass(current)
-      } else {
-	lines(current) = JumpTrue(current)
-      }
-      current += 1
-    }
-
     def apply(s: Symbol) = {
       lines(current) = If(current, s)
       current += 1
