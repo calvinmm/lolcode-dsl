@@ -18,6 +18,7 @@ class LolCode {
   case class ErrorPrintFunction(num: Int, s: Function0[Int]) extends LolLine
   case class StartFalse(num: Int) extends LolLine
   case class EndIf(num: Int) extends LolLine
+  case class JumpTrue(num: Int) extends LolLine
   case class Pass(num: Int) extends LolLine
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
   case class End(num: Int) extends LolLine
@@ -154,6 +155,13 @@ class LolCode {
 	    lineVar = lineVar + 1;
 	}
 	gotoLine(lineVar+1);
+      }
+      case JumpTrue(_) => {
+	var curLine = line
+	while(!(lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])) {
+	  curLine += 1
+	}
+	gotoLine(curLine+1)
       }
       case EndIf(_) => {
         gotoLine(line+1);
@@ -326,13 +334,10 @@ class LolCode {
     def apply(s: Int) = {
       if(s == 10) {
 	lines(current) = Pass(current)
-	current += 1
       } else {
-	while(!(lines(current).isInstanceOf[StartFalse] || lines(current).isInstanceOf[EndIf])) {
-	  current += 1
-	}
-	current += 1
+	lines(current) = JumpTrue(current)
       }
+      current += 1
     }
   }
 
