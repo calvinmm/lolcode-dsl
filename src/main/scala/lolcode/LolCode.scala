@@ -110,6 +110,10 @@ class LolCode {
         Console.err.println(Console.RED + s + Console.RESET)
         gotoLine(line + 1)
       }
+      case ErrorPrintFunction(_, s: Function0[Int]) => {
+        Console.err.println(Console.RED + s() + Console.RESET)
+        gotoLine(line + 1)
+      }
 
       case If(_, fun: Function0[Boolean]) => {
         if (fun()) {
