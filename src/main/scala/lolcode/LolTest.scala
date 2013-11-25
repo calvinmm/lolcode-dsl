@@ -298,11 +298,11 @@ object LolTest_Max_Min extends LolCode {
     HAI
     LOL('n) ITZ 3
     LOL('m) ITZ 10
-    VISIBLE(BIGGR_OF('n, 'm))
+    VISIBLE(BIGR_OF('n, 'm))
     VISIBLE(SMALLR_OF('n, 'm))
-    VISIBLE(BIGGR_OF('n, 1337))
+    VISIBLE(BIGR_OF('n, 1337))
     VISIBLE(SMALLR_OF(-20, 'm))
-    VISIBLE(BIGGR_OF('n, ('n TIEMZ 'm)))
+    VISIBLE(BIGR_OF('n, ('n TIEMZ 'm)))
     VISIBLE(SMALLR_OF(('m OVAR 'n), ('n TIEMZ 'm)))
     KTHXBYE
   }

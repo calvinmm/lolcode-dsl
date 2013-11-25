@@ -195,33 +195,33 @@ class LolCode {
 
   // max and min functions
   // int int
-  def BIGGR_OF(i: Int, j: Int): Function0[Int] = { () => max(i, j) }
+  def BIGR_OF(i: Int, j: Int): Function0[Int] = { () => max(i, j) }
   def SMALLR_OF(i: Int, j: Int): Function0[Int] = { () => min(i, j) }
   // int symbol
-  def BIGGR_OF(i: Int, j: Symbol): Function0[Int] = { () => max(i, binds.num(j)) }
+  def BIGR_OF(i: Int, j: Symbol): Function0[Int] = { () => max(i, binds.num(j)) }
   def SMALLR_OF(i: Int, j: Symbol): Function0[Int] = { () => min(i, binds.num(j)) }
   // int function
-  def BIGGR_OF(i: Int, j: Function0[Int]): Function0[Int] = { () => max(i, j()) }
+  def BIGR_OF(i: Int, j: Function0[Int]): Function0[Int] = { () => max(i, j()) }
   def SMALLR_OF(i: Int, j: Function0[Int]): Function0[Int] = { () => min(i, j()) }
   
   // symbol symbol
-  def BIGGR_OF(i: Symbol, j: Symbol): Function0[Int] = { () => max(binds.num(i), binds.num(j)) }
+  def BIGR_OF(i: Symbol, j: Symbol): Function0[Int] = { () => max(binds.num(i), binds.num(j)) }
   def SMALLR_OF(i: Symbol, j: Symbol): Function0[Int] = { () => min(binds.num(i), binds.num(j)) }
   // symbol int
-  def BIGGR_OF(i: Symbol, j: Int): Function0[Int] = { () => max(binds.num(i), j) }
+  def BIGR_OF(i: Symbol, j: Int): Function0[Int] = { () => max(binds.num(i), j) }
   def SMALLR_OF(i: Symbol, j: Int): Function0[Int] = { () => min(binds.num(i), j) }
   // symbol function
-  def BIGGR_OF(i: Symbol, j: Function0[Int]): Function0[Int] = { () => max(binds.num(i), j()) }
+  def BIGR_OF(i: Symbol, j: Function0[Int]): Function0[Int] = { () => max(binds.num(i), j()) }
   def SMALLR_OF(i: Symbol, j: Function0[Int]): Function0[Int] = { () => min(binds.num(i), j()) }
   
   // function function
-  def BIGGR_OF(i: Function0[Int], j: Function0[Int]): Function0[Int] = { () => max(i(), j()) }
+  def BIGR_OF(i: Function0[Int], j: Function0[Int]): Function0[Int] = { () => max(i(), j()) }
   def SMALLR_OF(i: Function0[Int], j: Function0[Int]): Function0[Int] = { () => min(i(), j()) }
   // function int
-  def BIGGR_OF(i: Function0[Int], j: Int): Function0[Int] = { () => max(i(), j) }
+  def BIGR_OF(i: Function0[Int], j: Int): Function0[Int] = { () => max(i(), j) }
   def SMALLR_OF(i: Function0[Int], j: Int): Function0[Int] = { () => min(i(), j) }
   // function symbol
-  def BIGGR_OF(i: Function0[Int], j: Symbol): Function0[Int] = { () => max(i(), binds.num(j)) }
+  def BIGR_OF(i: Function0[Int], j: Symbol): Function0[Int] = { () => max(i(), binds.num(j)) }
   def SMALLR_OF(i: Function0[Int], j: Symbol): Function0[Int] = { () => min(i(), binds.num(j)) }
   
   // infix operators
