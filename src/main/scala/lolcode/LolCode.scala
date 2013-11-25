@@ -2,18 +2,19 @@ package lolcode
 
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.Stack
+import scala.util.Random
 
 class LolCode {
   abstract sealed class LolLine
   case class PrintString(num: Int, s: String) extends LolLine
   case class PrintVariable(num: Int, s: Symbol) extends LolLine
   case class PrintNumber(num: Int, s: Int) extends LolLine
-  case class PrintFunction(num: Int, s: Function0[Int]) extends LolLine
+  case class PrintFunction(num: Int, s: Function0[Any]) extends LolLine
   case class ReadString(num: Int, s: Symbol) extends LolLine
   case class ErrorPrintString(num: Int, s: String) extends LolLine
   case class ErrorPrintVariable(num: Int, s: Symbol) extends LolLine
   case class ErrorPrintNumber(num: Int, s: Int) extends LolLine
-  case class ErrorPrintFunction(num: Int, s: Function0[Int]) extends LolLine
+  case class ErrorPrintFunction(num: Int, s: Function0[Any]) extends LolLine
   case class If(num: Int, fun: Function0[Boolean]) extends LolLine
   case class StartFalse(num: Int) extends LolLine
   case class EndIf(num: Int) extends LolLine
@@ -25,6 +26,7 @@ class LolCode {
 
   var lines = new HashMap[Int, LolLine]
   val binds = new Bindings
+  val random = new Random
 
   def KTHXBYE() = {
     lines(current) = End(current)
@@ -94,7 +96,7 @@ class LolCode {
         println(s)
         gotoLine(line + 1)
       }
-      case PrintFunction(_, s: Function0[Int]) => {
+      case PrintFunction(_, s: Function0[Any]) => {
         println(s())
         gotoLine(line + 1)
       }
@@ -111,7 +113,7 @@ class LolCode {
         Console.err.println(Console.RED + s + Console.RESET)
         gotoLine(line + 1)
       }
-      case ErrorPrintFunction(_, s: Function0[Int]) => {
+      case ErrorPrintFunction(_, s: Function0[Any]) => {
         Console.err.println(Console.RED + s() + Console.RESET)
         gotoLine(line + 1)
       }
@@ -156,45 +158,104 @@ class LolCode {
     }
   }
 
+  // prefix operators
+  def RAND(i: Int, j: Int): Int = { random.nextInt(j + 1 - i) + i }
+  
   // infix operators
   implicit def operator_int(i: Int) = new {
+    // int int
     def UP(j: Int): Function0[Int] = { () => (i + j) }
     def NERF(j: Int): Function0[Int] = { () => (i - j) }
     def TIEMZ(j: Int): Function0[Int] = { () => (i * j) }
     def OVAR(j: Int): Function0[Int] = { () => (i / j) }
-    def MOD(j: Int): Function0[Int] = { () => (i % j) }
+    def MOD(j: Int): Function0[Int] = { () => (i % j) }    
     def BIGR_THAN(j: Int): Function0[Boolean] = { () => (i > j) }
     def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (i < j) }
     def LIEK(j: Int): Function0[Boolean] = { () => (i == j) }
+    
+    // int symbol
+    def UP(j: Symbol): Function0[Int] = { () => (i + binds.num(j)) }
+    def NERF(j: Symbol): Function0[Int] = { () => (i - binds.num(j)) }
+    def TIEMZ(j: Symbol): Function0[Int] = { () => (i * binds.num(j)) }
+    def OVAR(j: Symbol): Function0[Int] = { () => (i / binds.num(j)) }
+    def MOD(j: Symbol): Function0[Int] = { () => (i % binds.num(j)) }
+    def BIGR_THAN(j: Symbol): Function0[Boolean] = { () => (i > binds.num(j)) }
+    def SMALLR_THAN(j: Symbol): Function0[Boolean] = { () => (i < binds.num(j)) }
+    def LIEK(j: Symbol): Function0[Boolean] = { () => (i == binds.num(j)) }
+    
+    // int function
     def UP(j: Function0[Int]): Function0[Int] = { () => (i + j()) }
     def NERF(j: Function0[Int]): Function0[Int] = { () => (i - j()) }
     def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (i * j()) }
     def OVAR(j: Function0[Int]): Function0[Int] = { () => (i / j()) }
     def MOD(j: Function0[Int]): Function0[Int] = { () => (i % j()) }
+    def BIGR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (i > j()) }
+    def SMALLR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (i < j()) }
+    def LIEK(j: Function0[Int]): Function0[Boolean] = { () => (i == j()) }
   }
 
   implicit def operator_symbol(i: Symbol) = new {
-    def BIGR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) > j) }
-    def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) < j) }
-    def LIEK(j: Int): Function0[Boolean] = { () => (binds.num(i) == j) }
+    // symbol int
     def UP(j: Int): Function0[Int] = { () => binds.num(i) + j }
     def NERF(j: Int): Function0[Int] = { () => binds.num(i) - j }
     def TIEMZ(j: Int): Function0[Int] = { () => binds.num(i) * j }
     def OVAR(j: Int): Function0[Int] = { () => binds.num(i) / j }
     def MOD(j: Int): Function0[Int] = { () => binds.num(i) % j }
+    def BIGR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) > j) }
+    def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) < j) }
+    def LIEK(j: Int): Function0[Boolean] = { () => (binds.num(i) == j) }
+    
+    // symbol symbol
+    def UP(j: Symbol): Function0[Int] = { () => binds.num(i) + binds.num(j) }
+    def NERF(j: Symbol): Function0[Int] = { () => binds.num(i) - binds.num(j) }
+    def TIEMZ(j: Symbol): Function0[Int] = { () => binds.num(i) * binds.num(j) }
+    def OVAR(j: Symbol): Function0[Int] = { () => binds.num(i) / binds.num(j) }
+    def MOD(j: Symbol): Function0[Int] = { () => binds.num(i) % binds.num(j) }
+    def BIGR_THAN(j: Symbol): Function0[Boolean] = { () => (binds.num(i) > binds.num(j)) }
+    def SMALLR_THAN(j: Symbol): Function0[Boolean] = { () => (binds.num(i) < binds.num(j)) }
+    def LIEK(j: Symbol): Function0[Boolean] = { () => (binds.num(i) == binds.num(j)) }
+    
+    // symbol function
+    def UP(j: Function0[Int]): Function0[Int] = { () => binds.num(i) + j() }
+    def NERF(j: Function0[Int]): Function0[Int] = { () => binds.num(i) - j() }
+    def TIEMZ(j: Function0[Int]): Function0[Int] = { () => binds.num(i) * j() }
+    def OVAR(j: Function0[Int]): Function0[Int] = { () => binds.num(i) / j() }
+    def MOD(j: Function0[Int]): Function0[Int] = { () => binds.num(i) % j() }
+    def BIGR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (binds.num(i) > j()) }
+    def SMALLR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (binds.num(i) < j()) }
+    def LIEK(j: Function0[Int]): Function0[Boolean] = { () => (binds.num(i) == j()) }
   }
 
   implicit def operator_function(i: Function0[Int]) = new {
+    // function int
     def UP(j: Int): Function0[Int] = { () => (i() + j) }
     def NERF(j: Int): Function0[Int] = { () => (i() - j) }
     def TIEMZ(j: Int): Function0[Int] = { () => (i() * j) }
     def OVAR(j: Int): Function0[Int] = { () => (i() / j) }
     def MOD(j: Int): Function0[Int] = { () => (i() % j) }
+    def BIGR_THAN(j: Int): Function0[Boolean] = { () => (i() > j) }
+    def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (i() < j) }
+    def LIEK(j: Int): Function0[Boolean] = { () => (i() == j) }
+    
+    // function symbol
+    def UP(j: Symbol): Function0[Int] = { () => (i() + binds.num(j)) }
+    def NERF(j: Symbol): Function0[Int] = { () => (i() - binds.num(j)) }
+    def TIEMZ(j: Symbol): Function0[Int] = { () => (i() * binds.num(j)) }
+    def OVAR(j: Symbol): Function0[Int] = { () => (i() / binds.num(j)) }
+    def MOD(j: Symbol): Function0[Int] = { () => (i() % binds.num(j)) }
+    def BIGR_THAN(j: Symbol): Function0[Boolean] = { () => (i() > binds.num(j)) }
+    def SMALLR_THAN(j: Symbol): Function0[Boolean] = { () => (i() < binds.num(j)) }
+    def LIEK(j: Symbol): Function0[Boolean] = { () => (i() == binds.num(j)) }
+    
+    // function function
     def UP(j: Function0[Int]): Function0[Int] = { () => (i() + j()) }
     def NERF(j: Function0[Int]): Function0[Int] = { () => (i() - j()) }
     def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (i() * j()) }
     def OVAR(j: Function0[Int]): Function0[Int] = { () => (i() / j()) }
     def MOD(j: Function0[Int]): Function0[Int] = { () => (i() % j()) }
+    def BIGR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (i() > j()) }
+    def SMALLR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (i() < j()) }
+    def LIEK(j: Function0[Int]): Function0[Boolean] = { () => (i() == j()) }
   }
 
   object GIMMEH {
@@ -229,7 +290,7 @@ class LolCode {
       lines(current) = PrintNumber(current, s)
       current += 1
     }
-    def apply(s: Function0[Int]) = {
+    def apply(s: Function0[Any]) = {
       lines(current) = PrintFunction(current, s)
       current += 1
     }

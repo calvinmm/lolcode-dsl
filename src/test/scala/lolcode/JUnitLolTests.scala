@@ -69,6 +69,15 @@ class JUnitLolTests {
   }
 
   @Test
+  def test_int_reverse_assign {
+    val command: String = "make specific-test O=LolTest_Int_ReverseAssign"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(150, 150).map(_.toString)
+    assertEquals(expected, output)
+  }
+
+  @Test
   def test_int_int_assign {
     val command: String = "make specific-test O=LolTest_Int_IntAssign"
     val output = run_test(command)
@@ -220,6 +229,15 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector("hello").map(_.toString)
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_boolean_ops {
+    val command: String = "make specific-test O=LolTest_BOOLEAN_OPS"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(true, false, true, false, true).map(_.toString)
     assertEquals(expected, output)
   }
 }

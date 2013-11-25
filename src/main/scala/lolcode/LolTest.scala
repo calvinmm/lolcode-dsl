@@ -42,6 +42,16 @@ object LolTest_Int_IntAssign extends LolCode {
   }
 }
 
+object LolTest_Int_ReverseAssign extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('a) ITZ 50
+    VISIBLE('a UP 100)
+    VISIBLE(100 UP 'a)
+    KTHXBYE
+  }
+}
+
 object LolTest_Int_Assign_Print extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
@@ -218,6 +228,19 @@ object LolTest_GIMMEH_STRING extends LolCode {
     HAI
     GIMMEH('n)
     VISIBLE('n)
+    KTHXBYE
+  }
+}
+
+object LolTest_BOOLEAN_OPS extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('n) ITZ 10
+    VISIBLE('n LIEK 10)
+    VISIBLE('n SMALLR_THAN 5)
+    VISIBLE('n BIGR_THAN 5)
+    VISIBLE('n BIGR_THAN 20)
+    VISIBLE('n SMALLR_THAN 20)
     KTHXBYE
   }
 }
