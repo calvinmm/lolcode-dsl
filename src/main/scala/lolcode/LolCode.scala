@@ -10,6 +10,7 @@ class LolCode {
   case class PrintVariable(num: Int, s: Symbol) extends LolLine
   case class PrintNumber(num: Int, s: Int) extends LolLine
   case class PrintFunction(num: Int, s: Function0[Any]) extends LolLine
+  case class PrintMany(num: Int, s: Vector[Any]) extends LolLine
   case class ReadString(num: Int, s: Symbol) extends LolLine
   case class ErrorPrintString(num: Int, s: String) extends LolLine
   case class ErrorPrintVariable(num: Int, s: Symbol) extends LolLine
@@ -103,6 +104,17 @@ class LolCode {
         println(s())
         gotoLine(line + 1)
       }
+      case PrintMany(_, s: Vector[Any]) => {
+
+        println(s.map(e => e match {
+          case v: Symbol => binds.any(v)
+          case v: Function0[Any] => v()
+          case _ => e
+        }).mkString(" "))
+        
+        gotoLine(line + 1)
+      }
+      
       // print to stderr
       case ErrorPrintString(_, s: String) => {
         Console.err.println(Console.RED + s + Console.RESET)
@@ -300,6 +312,10 @@ class LolCode {
   object VISIBLE {
     def apply(s: String) = {
       lines(current) = PrintString(current, s)
+      current += 1
+    }
+    def apply(s: Any*) = {
+      lines(current) = PrintMany(current, s.toVector)
       current += 1
     }
     def apply(s: Symbol) = {

@@ -285,3 +285,12 @@ object LolTest_Nested_Loops extends LolCode {
     KTHXBYE
   }
 }
+
+object LolTest_Print_Many extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('n) ITZ 10
+    VISIBLE("n", 'n, "n+10", 'n UP 10)
+    KTHXBYE
+  }
+}

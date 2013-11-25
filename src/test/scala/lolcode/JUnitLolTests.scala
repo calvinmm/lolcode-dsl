@@ -245,6 +245,7 @@ class JUnitLolTests {
   def test_loop {
     val command: String = "make specific-test O=LolTest_Loop"
     val output = run_test(command)
+    
     val expected: Vector[String] = Vector(
       "loop", "loop", "loop", "loop", "loop", "loop", "loop")
     assertEquals(expected, output)
@@ -254,8 +255,18 @@ class JUnitLolTests {
   def test_nested_loops {
     val command: String = "make specific-test O=LolTest_Nested_Loops"
     val output = run_test(command)
+    
     val expected: Vector[String] = Vector("9", "8", "7", "11", "12",
       "13")
+    assertEquals(expected, output)
+  }
+  
+  @Test
+  def test_print_many {
+    val command: String = "make specific-test O=LolTest_Print_Many"
+    val output = run_test(command)
+    
+    val expected: Vector[String] = Vector(Vector("n", 10, "n+10", 10 + 10).map(_.toString).mkString(" "))
     assertEquals(expected, output)
   }
 }

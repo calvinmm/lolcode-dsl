@@ -53,6 +53,17 @@ IM OUTTA YR LOOP
 * Runs the same code in the `IM IN YR LOOP` code block until it goes to a `GTFO` instruction in the code block
 * An `IM IN YR LOOP` code block which never goes to a `GTFO` instruction causes an infinite loop
 
+```
+HOW DUZ I <NAYM> [YR <arg1>, <arg2>]
+	...SOMECODE
+	BTW THIS IS HOW YOU RETURN
+	FOUND YR <VALUE>
+IF U SAY SO
+```
+
+* Defines a function with name `NAYM` and returns `VALUE`
+* Optional to take arguments, `arg1`, `arg2`
+
 `KTHXBYE`
 
 * `KTHXBYE` terminates the program
