@@ -59,7 +59,7 @@ class LolCode {
       lines(current) = Assign(current, (() => binds.set(sym, v)))
       current += 1
     }
-    def ITZ(v: Function0[Int]): Unit = {
+    def ITZ(v: Function0[Any]): Unit = {
       lines(current) = Assign(current, (() => binds.set(sym, v())))
       current += 1
     }
@@ -72,7 +72,7 @@ class LolCode {
       lines(current) = Assign(current, (() => binds.set(sym, v)))
       current += 1
     }
-    def R(v: Function0[Int]): Unit = {
+    def R(v: Function0[Any]): Unit = {
       lines(current) = Assign(current, (() => binds.set(sym, v())))
       current += 1
     }
