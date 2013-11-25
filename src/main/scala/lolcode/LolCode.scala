@@ -19,6 +19,9 @@ class LolCode {
   case class StartFalse(num: Int) extends LolLine
   case class EndIf(num: Int) extends LolLine
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
+  case class LoopBeg() extends LolLine
+  case class Break() extends LolLine
+  case class LoopEnd() extends LolLine
   case class End(num: Int) extends LolLine
 
   // keep track of which line we are on
@@ -153,6 +156,23 @@ class LolCode {
           fn()
           gotoLine(line + 1)
         }
+      case LoopBeg() => {
+        gotoLine(line + 1)
+      }
+      case Break() => {
+        var lineVar = line
+        while(!lines(lineVar).isInstanceOf[LoopEnd]) {
+          lineVar += 1
+        }
+        gotoLine(lineVar + 1)
+      }
+      case LoopEnd() => {
+        var lineVar = line
+        while(!lines(lineVar).isInstanceOf[LoopBeg]) {
+          lineVar -= 1
+        }
+        gotoLine(lineVar + 1)
+      }
       case End(_) =>
       case _ =>
     }
@@ -328,6 +348,21 @@ class LolCode {
       lines(current) = If(current, s)
       current += 1
     }
+  }
+
+  def IM_IN_YR_LOOP {
+    lines(current) = LoopBeg()
+    current += 1
+  }
+
+  def IM_OUTTA_YR_LOOP {
+    lines(current) = LoopEnd()
+    current += 1
+  }
+
+  def GTFO {
+    lines(current) = Break()
+    current += 1
   }
 
   class Bindings {

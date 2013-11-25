@@ -244,3 +244,44 @@ object LolTest_BOOLEAN_OPS extends LolCode {
     KTHXBYE
   }
 }
+
+object LolTest_Loop extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('n) ITZ 10
+    IM_IN_YR_LOOP
+    IZ('n SMALLR_THAN 4)
+    GTFO
+    NOWAI
+    LOL('n) ITZ ('n NERF 1)
+    VISIBLE("loop")
+    KTHX
+    IM_OUTTA_YR_LOOP
+    KTHXBYE
+  }
+}
+
+object LolTest_Nested_Loops extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('n) ITZ 10
+    LOL('m) ITZ 10
+    IM_IN_YR_LOOP
+    IM_IN_YR_LOOP
+    IZ('n SMALLR_THAN 8)
+    GTFO
+    NOWAI
+    LOL('n) ITZ ('n NERF 1)
+    VISIBLE('n)
+    KTHX
+    IM_OUTTA_YR_LOOP
+    IZ('m BIGR_THAN 12)
+    GTFO
+    NOWAI
+    LOL('m) ITZ ('m UP 1)
+    VISIBLE('m)
+    KTHX
+    IM_OUTTA_YR_LOOP
+    KTHXBYE
+  }
+}

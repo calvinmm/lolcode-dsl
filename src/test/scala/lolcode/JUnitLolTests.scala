@@ -240,4 +240,22 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(true, false, true, false, true).map(_.toString)
     assertEquals(expected, output)
   }
+
+  @Test
+  def test_loop {
+    val command: String = "make specific-test O=LolTest_Loop"
+    val output = run_test(command)
+    val expected: Vector[String] = Vector(
+      "loop", "loop", "loop", "loop", "loop", "loop", "loop")
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_nested_loops {
+    val command: String = "make specific-test O=LolTest_Nested_Loops"
+    val output = run_test(command)
+    val expected: Vector[String] = Vector("9", "8", "7", "11", "12",
+      "13")
+    assertEquals(expected, output)
+  }
 }
