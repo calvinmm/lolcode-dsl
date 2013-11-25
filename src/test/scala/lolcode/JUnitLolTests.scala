@@ -67,7 +67,7 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(1, 1337).map(_.toString)
     assertEquals(expected, output)
   }
-  
+
   @Test
   def test_int_int_assign {
     val command: String = "make specific-test O=LolTest_Int_IntAssign"
@@ -76,13 +76,13 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(1, 2, 8).map(_.toString)
     assertEquals(expected, output)
   }
-  
+
   @Test
   def test_int_assign_print {
     val command: String = "make specific-test O=LolTest_Int_Assign_Print"
     val output = run_test(command)
 
-    val expected: Vector[String] = Vector((1+1) * 4).map(_.toString)
+    val expected: Vector[String] = Vector((1 + 1) * 4).map(_.toString)
     assertEquals(expected, output)
   }
 
@@ -113,16 +113,16 @@ class JUnitLolTests {
     assertEquals(expected, output)
   }
 
-//This test fails until we have order of operations done correctly
-/*
-  @Test
-  def test_math_up_tiemz {
-    val command: String = "make specific-test O=LolTest_Math_Up_Tiemz"
-    val output = run_test(command)
-
-    val expected: Vector[String] = Vector(13 + 100 * 12).map(_.toString)
-    assertEquals(expected, output)
-  }*/
+  //This test fails until we have order of operations done correctly
+  /*
+    @Test
+    def test_math_up_tiemz {
+      val command: String = "make specific-test O=LolTest_Math_Up_Tiemz"
+      val output = run_test(command)
+  
+      val expected: Vector[String] = Vector(13 + 100 * 12).map(_.toString)
+      assertEquals(expected, output)
+    }*/
 
   @Test
   def test_math_nerf {
@@ -187,7 +187,6 @@ class JUnitLolTests {
     assertEquals(expected, output)
   }
 
-  
   @Test
   def test_if_true_var {
     val command: String = "make specific-test O=LolTest_IZ_TRUE_VAR"
@@ -203,6 +202,24 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(6).map(_.toString)
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_gimmeh {
+    val command: String = "make specific-test-input O=LolTest_GIMMEH INPUT=4"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(4, 4 * 30).map(_.toString)
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_gimmeh_string {
+    val command: String = "make specific-test-input O=LolTest_GIMMEH_STRING INPUT=hello"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("hello").map(_.toString)
     assertEquals(expected, output)
   }
 }

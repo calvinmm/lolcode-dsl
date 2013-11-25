@@ -22,4 +22,4 @@
 4. Switch Statements
 5. Nested Anything
 6. Files
-7. User Input
+7. :white_check_mark: ~~User Input~~

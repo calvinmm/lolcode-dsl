@@ -151,9 +151,9 @@ object LolTest_IZ_TRUE_NUMS extends LolCode {
     HAI
     I_HAZ_A('num) ITZ 4
     IZ(4 LIEK 4)
-      LOL('num) R 5
+    LOL('num) R 5
     NOWAI
-      LOL('num) R 6
+    LOL('num) R 6
     KTHX
     VISIBLE('num)
     KTHXBYE
@@ -165,24 +165,23 @@ object LolTest_IZ_FALSE_NUMS extends LolCode {
     HAI
     I_HAZ_A('num) ITZ 4
     IZ(4 BIGR_THAN 4)
-      LOL('num) R 5
+    LOL('num) R 5
     NOWAI
-      LOL('num) R 6
+    LOL('num) R 6
     KTHX
     VISIBLE('num)
     KTHXBYE
   }
 }
 
-
 object LolTest_IZ_TRUE_VAR extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
     I_HAZ_A('num) ITZ 4
     IZ('num LIEK 4)
-      LOL('num) R 5
+    LOL('num) R 5
     NOWAI
-      LOL('num) R 6
+    LOL('num) R 6
     KTHX
     VISIBLE('num)
     KTHXBYE
@@ -194,11 +193,31 @@ object LolTest_IZ_FALSE_VAR extends LolCode {
     HAI
     I_HAZ_A('num) ITZ 4
     IZ('num SMALLR_THAN 4)
-      LOL('num) R 5
+    LOL('num) R 5
     NOWAI
-      LOL('num) R 6
+    LOL('num) R 6
     KTHX
     VISIBLE('num)
+    KTHXBYE
+  }
+}
+
+object LolTest_GIMMEH extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    GIMMEH('n)
+    VISIBLE('n)
+    LOL('m) R ('n TIEMZ 30)
+    VISIBLE('m)
+    KTHXBYE
+  }
+}
+
+object LolTest_GIMMEH_STRING extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    GIMMEH('n)
+    VISIBLE('n)
     KTHXBYE
   }
 }

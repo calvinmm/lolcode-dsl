@@ -6,6 +6,9 @@ run:
 specific-test:
 	@$(BT) "run-main lolcode.$(O)"
 
+specific-test-input:
+	@echo $(INPUT) | $(BT) "run-main lolcode.$(O)"
+
 test:
 	@$(BT) "test-only"
 

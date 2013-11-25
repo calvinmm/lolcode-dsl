@@ -9,6 +9,7 @@ class LolCode {
   case class PrintVariable(num: Int, s: Symbol) extends LolLine
   case class PrintNumber(num: Int, s: Int) extends LolLine
   case class PrintFunction(num: Int, s: Function0[Int]) extends LolLine
+  case class ReadString(num: Int, s: Symbol) extends LolLine
   case class ErrorPrintString(num: Int, s: String) extends LolLine
   case class ErrorPrintVariable(num: Int, s: Symbol) extends LolLine
   case class ErrorPrintNumber(num: Int, s: Int) extends LolLine
@@ -114,6 +115,11 @@ class LolCode {
         Console.err.println(Console.RED + s() + Console.RESET)
         gotoLine(line + 1)
       }
+      case ReadString(_, s: Symbol) => {
+        val value: Any = tryInt(readLine())
+        binds.set(s, value)
+        gotoLine(line + 1)
+      }
 
       case If(_, fun: Function0[Boolean]) => {
         if (fun()) {
@@ -191,6 +197,25 @@ class LolCode {
     def MOD(j: Function0[Int]): Function0[Int] = { () => (i() % j()) }
   }
 
+  object GIMMEH {
+    def apply(s: Symbol) = {
+      lines(current) = ReadString(current, s)
+      current += 1
+    }
+  }
+
+  /**
+   * attempt to convert String to an Integer
+   * if not possible, return the original String
+   */
+  def tryInt(s: String): Any = {
+    try {
+      s.toInt
+    } catch {
+      case e: Exception => s
+    }
+  }
+
   object VISIBLE {
     def apply(s: String) = {
       lines(current) = PrintString(current, s)
@@ -244,7 +269,7 @@ class LolCode {
     }
   }
 
-  class Bindings[U] {
+  class Bindings {
     val bindings = HashMap[Symbol, Any]()
 
     /**
