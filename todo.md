@@ -11,8 +11,8 @@
 7. :white_check_mark: ~~Math with variables~~
 8. :white_check_mark: ~~Boolean operators~~
 9. :white_check_mark: ~~If Statements~~
-10. Loops
-11. Max/Min
+10. :white_check_mark: ~~Loops~~
+11. :white_check_mark: ~~Max/Min~~
 
 ### Stretch Goals
 

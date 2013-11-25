@@ -93,12 +93,10 @@ object LolTest_Math_Up extends LolCode {
   }
 }
 
-// This test will fail until we obey order of operations
-// TURN BACK ON WHEN TESTING ORDER OF OPERATIONS
 object LolTest_Math_Up_Tiemz extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
-    LOL('a) ITZ (13 UP 100 TIEMZ 12)
+    LOL('a) ITZ (13 UP (100 TIEMZ 12))
     VISIBLE('a)
     KTHXBYE
   }
@@ -291,6 +289,21 @@ object LolTest_Print_Many extends LolCode {
     HAI
     LOL('n) ITZ 10
     VISIBLE("n", 'n, "n+10", 'n UP 10)
+    KTHXBYE
+  }
+}
+
+object LolTest_Max_Min extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('n) ITZ 3
+    LOL('m) ITZ 10
+    VISIBLE(BIGGR_OF('n, 'm))
+    VISIBLE(SMALLR_OF('n, 'm))
+    VISIBLE(BIGGR_OF('n, 1337))
+    VISIBLE(SMALLR_OF(-20, 'm))
+    VISIBLE(BIGGR_OF('n, ('n TIEMZ 'm)))
+    VISIBLE(SMALLR_OF(('m OVAR 'n), ('n TIEMZ 'm)))
     KTHXBYE
   }
 }

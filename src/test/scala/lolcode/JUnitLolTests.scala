@@ -5,6 +5,7 @@ import org.junit.Test
 
 import scala.collection.mutable.Buffer
 import scala.sys.process._
+import scala.math.{ min, max }
 
 class JUnitLolTests {
 
@@ -122,16 +123,14 @@ class JUnitLolTests {
     assertEquals(expected, output)
   }
 
-  //This test fails until we have order of operations done correctly
-  /*
-    @Test
-    def test_math_up_tiemz {
-      val command: String = "make specific-test O=LolTest_Math_Up_Tiemz"
-      val output = run_test(command)
-  
-      val expected: Vector[String] = Vector(13 + 100 * 12).map(_.toString)
-      assertEquals(expected, output)
-    }*/
+  @Test
+  def test_math_up_tiemz {
+    val command: String = "make specific-test O=LolTest_Math_Up_Tiemz"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(13 + 100 * 12).map(_.toString)
+    assertEquals(expected, output)
+  }
 
   @Test
   def test_math_nerf {
@@ -245,7 +244,7 @@ class JUnitLolTests {
   def test_loop {
     val command: String = "make specific-test O=LolTest_Loop"
     val output = run_test(command)
-    
+
     val expected: Vector[String] = Vector(
       "loop", "loop", "loop", "loop", "loop", "loop", "loop")
     assertEquals(expected, output)
@@ -255,18 +254,31 @@ class JUnitLolTests {
   def test_nested_loops {
     val command: String = "make specific-test O=LolTest_Nested_Loops"
     val output = run_test(command)
-    
+
     val expected: Vector[String] = Vector("9", "8", "7", "11", "12",
       "13")
     assertEquals(expected, output)
   }
-  
+
   @Test
   def test_print_many {
     val command: String = "make specific-test O=LolTest_Print_Many"
     val output = run_test(command)
-    
+
     val expected: Vector[String] = Vector(Vector("n", 10, "n+10", 10 + 10).map(_.toString).mkString(" "))
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_max_min {
+    val command: String = "make specific-test O=LolTest_Max_Min"
+    val output = run_test(command)
+
+    val (n, m) = (3, 10)
+
+    val expected: Vector[String] = Vector(
+      max(n, m), min(n, m), max(n, 1337), min(-20, m),
+      max(n, n * m), min(m / n, n * m)).map(_.toString)
     assertEquals(expected, output)
   }
 }
