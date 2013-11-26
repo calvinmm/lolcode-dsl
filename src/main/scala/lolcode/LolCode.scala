@@ -22,7 +22,7 @@ class LolCode {
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
   case class LoopBeg() extends LolLine
   case class Break() extends LolLine
-  case class LoopEnd() extends LolLine
+  case class LoopEnd(loopBegLine: Int) extends LolLine
   case class End(num: Int) extends LolLine
 
   // keep track of which line we are on
@@ -31,6 +31,7 @@ class LolCode {
   var lines = new HashMap[Int, LolLine]
   val binds = new Bindings
   val random = new Random
+  val loopBegLines = new Stack[Int]
 
   def KTHXBYE() = {
     lines(current) = End(current)
@@ -180,17 +181,19 @@ class LolCode {
       }
       case Break() => {
         var lineVar = line
-        while(!lines(lineVar).isInstanceOf[LoopEnd]) {
+        var loopBegCount = 0
+        while(!lines(lineVar).isInstanceOf[LoopEnd] ||
+          loopBegCount > 0) {
+          if(lines(lineVar).isInstanceOf[LoopBeg])
+            loopBegCount += 1
+          if(lines(lineVar).isInstanceOf[LoopEnd])
+            loopBegCount -= 1
           lineVar += 1
         }
         gotoLine(lineVar + 1)
       }
-      case LoopEnd() => {
-        var lineVar = line
-        while(!lines(lineVar).isInstanceOf[LoopBeg]) {
-          lineVar -= 1
-        }
-        gotoLine(lineVar + 1)
+      case LoopEnd(loopBegLine: Int) => {
+        gotoLine(loopBegLine + 1)
       }
       case End(_) =>
       case _ =>
@@ -406,11 +409,12 @@ class LolCode {
 
   def IM_IN_YR_LOOP {
     lines(current) = LoopBeg()
+    loopBegLines.push(current)
     current += 1
   }
 
   def IM_OUTTA_YR_LOOP {
-    lines(current) = LoopEnd()
+    lines(current) = LoopEnd(loopBegLines.pop())
     current += 1
   }
 

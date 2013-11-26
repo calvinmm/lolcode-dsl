@@ -372,6 +372,31 @@ object LolTest_Nested_Loops extends LolCode {
   }
 }
 
+object LolTest_Nested_Loops2 extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('n) ITZ 10
+    LOL('m) ITZ 10
+    IM_IN_YR_LOOP
+      IZ('m BIGR_THAN 12)
+        GTFO
+      NOWAI
+        LOL('m) ITZ ('m UP 1)
+        VISIBLE('m)
+      KTHX
+      IM_IN_YR_LOOP
+        IZ('n SMALLR_THAN 8)
+          GTFO
+        NOWAI
+          LOL('n) ITZ ('n NERF 1)
+          VISIBLE('n)
+        KTHX
+      IM_OUTTA_YR_LOOP
+    IM_OUTTA_YR_LOOP
+    KTHXBYE
+  }
+}
+
 object LolTest_Print_Many extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI

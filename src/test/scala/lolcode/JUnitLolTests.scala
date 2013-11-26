@@ -298,6 +298,15 @@ class JUnitLolTests {
   }
 
   @Test
+  def test_nested_loops2 {
+    val command: String = "make specific-test O=LolTest_Nested_Loops2"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("11", "9", "8", "7", "12", "13")
+    assertEquals(expected, output)
+  }
+
+  @Test
   def test_print_many {
     val command: String = "make specific-test O=LolTest_Print_Many"
     val output = run_test(command)
