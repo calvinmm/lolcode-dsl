@@ -420,3 +420,58 @@ object LolTest_Max_Min extends LolCode {
     KTHXBYE
   }
 }
+
+object LolTest_Function extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    HOW_DUZ_I('func)
+      VISIBLE("func-test")
+    IF_U_SAY_SO
+    PLZ('func)
+    KTHXBYE
+  }
+}
+
+object LolTest_2Function extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    HOW_DUZ_I('func1)
+      VISIBLE("func1-test")
+    IF_U_SAY_SO
+    PLZ('func1)
+    HOW_DUZ_I('func2)
+      VISIBLE("func2-test")
+    IF_U_SAY_SO
+    PLZ('func2)
+    KTHXBYE
+  }
+}
+
+object LolTest_CallInFunction extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    HOW_DUZ_I('func2)
+      VISIBLE("func2-test")
+    IF_U_SAY_SO
+    HOW_DUZ_I('func1)
+      VISIBLE("func1-test")
+      PLZ('func2)
+    IF_U_SAY_SO
+    PLZ('func1)
+    KTHXBYE
+  }
+}
+
+object LolTest_AssignmentInFunction extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('n) ITZ 10
+    HOW_DUZ_I('func1)
+      LOL('n) ITZ 1
+    IF_U_SAY_SO
+    VISIBLE('n)
+    PLZ('func1)
+    VISIBLE('n)
+    KTHXBYE
+  }
+}

@@ -327,4 +327,40 @@ class JUnitLolTests {
       max(n, n * m), min(m / n, n * m)).map(_.toString)
     assertEquals(expected, output)
   }
+
+  @Test
+  def test_function {
+    val command: String = "make specific-test O=LolTest_Function"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("func-test")
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_2function {
+    val command: String = "make specific-test O=LolTest_2Function"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("func1-test", "func2-test")
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_CallInFunction {
+    val command: String = "make specific-test O=LolTest_CallInFunction"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("func1-test", "func2-test")
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_AssignmentInFunction {
+    val command: String = "make specific-test O=LolTest_AssignmentInFunction"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("10", "1")
+    assertEquals(expected, output)
+  }
 }

@@ -23,6 +23,9 @@ class LolCode {
   case class LoopBeg() extends LolLine
   case class Break() extends LolLine
   case class LoopEnd(loopBegLine: Int) extends LolLine
+  case class FuncBeg(name: Symbol) extends LolLine
+  case class FuncEnd() extends LolLine
+  case class FuncCall(funcName: Symbol) extends LolLine
   case class End(num: Int) extends LolLine
 
   // keep track of which line we are on
@@ -30,8 +33,10 @@ class LolCode {
 
   var lines = new HashMap[Int, LolLine]
   val binds = new Bindings
+  val funcBegLines = new HashMap[Symbol, Int]
   val random = new Random
   val loopBegLines = new Stack[Int]
+  val pcStack = new Stack[Int]
 
   def KTHXBYE() = {
     lines(current) = End(current)
@@ -194,6 +199,23 @@ class LolCode {
       }
       case LoopEnd(loopBegLine: Int) => {
         gotoLine(loopBegLine + 1)
+      }
+      case FuncBeg(name: Symbol) => {
+        var lineVar = line
+        while(!lines(lineVar).isInstanceOf[FuncEnd]) {
+          lineVar += 1
+        }
+        gotoLine(lineVar + 1)
+      }
+      case FuncEnd() => {
+        gotoLine(pcStack.pop())
+      }
+      case FuncCall(funcName: Symbol) => {
+        pcStack.push(line + 1)
+        gotoLine(funcBegLines.get(funcName) match {
+          case Some(s) => s+1 //go beyond the start of the function
+          case None => -1
+        })
       }
       case End(_) =>
       case _ =>
@@ -421,6 +443,26 @@ class LolCode {
   def GTFO {
     lines(current) = Break()
     current += 1
+  }
+
+  object HOW_DUZ_I {
+    def apply(funcName: Symbol) = {
+      funcBegLines += (funcName -> current)
+      lines(current) = FuncBeg(funcName)
+      current += 1
+    }
+  }
+
+  def IF_U_SAY_SO {
+    lines(current) = FuncEnd()
+    current += 1
+  }
+
+  object PLZ {
+    def apply(funcName: Symbol) = {
+      lines(current) = FuncCall(funcName)
+      current += 1
+    }
   }
 
   class Bindings {
