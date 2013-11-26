@@ -45,6 +45,7 @@ class LolCode {
 
   def HAI() = {
     lines = new HashMap[Int, LolLine]
+    binds.newScope()
   }
 
   def NOWAI() = {
@@ -208,10 +209,12 @@ class LolCode {
         gotoLine(lineVar + 1)
       }
       case FuncEnd() => {
+        binds.leaveScope()
         gotoLine(pcStack.pop())
       }
       case FuncCall(funcName: Symbol) => {
         pcStack.push(line + 1)
+        binds.newScope()
         gotoLine(funcBegLines.get(funcName) match {
           case Some(s) => s+1 //go beyond the start of the function
           case None => -1
@@ -466,13 +469,51 @@ class LolCode {
   }
 
   class Bindings {
+    val bindingsStack = Stack[HashMap[Symbol, Any]]()
     val bindings = HashMap[Symbol, Any]()
+
+    /*
+     * Create a new scope.
+     * Call whenever doing a function call.
+     */
+    def newScope() {
+      bindingsStack.push(new HashMap[Symbol, Any])
+    }
+
+    /*
+     * Destroy topmost scope.
+     * Call whenever leaving a function.
+     */
+    def leaveScope() {
+      bindingsStack.pop()
+    }
+
+    /**
+     * get correct HashMap for your scope
+     */
+    def getMap(sym: Symbol): HashMap[Symbol, Any] = {
+      val bindingsStackCopy = Stack[HashMap[Symbol, Any]]()
+      val bindingsStackTop = bindingsStack.top
+      while (!bindingsStack.isEmpty && !bindingsStack.top.contains(sym)) {
+        bindingsStackCopy.push(bindingsStack.pop())
+      }
+      //bindingsStackCopy.push(bindingsStack.pop())
+      var map = bindingsStackTop
+      if (!bindingsStack.isEmpty) {
+        map = bindingsStack.top
+      }
+      while (!bindingsStackCopy.isEmpty) {
+        bindingsStack.push(bindingsStackCopy.pop())
+      }
+      map
+    }
 
     /**
      * set a value in our map
      */
     def set(k: Symbol, v: Any): Unit = {
-      bindings(k) = v;
+      val map = getMap(k)
+      map(k) = v;
     }
 
     /**
@@ -489,6 +530,7 @@ class LolCode {
      * WARNING: don't use yet
      * returns ints and doubles
      */
+    /* DID NOT TOUCH THIS WHILE IMPLEMENTING SCOPE */
     def anyval(k: Symbol): AnyVal = {
       any(k) match {
         case n: Int => n
@@ -501,14 +543,15 @@ class LolCode {
      * returns anything
      */
     def any(k: Symbol): Any = {
-      bindings.get(k) match {
+      val map = getMap(k)
+      map.get(k) match {
         case Some(x) => x
         case None => None
       }
     }
 
     override def toString: String = {
-      bindings.toString
+      bindingsStack.top.toString
     }
   }
 }
