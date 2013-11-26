@@ -1,7 +1,10 @@
 BT=sbt
 
 run:
-	@echo not implemented
+	@$(BT) compile
+
+demo:
+	@$(BT) "run-main lolcode.LolDemo"
 
 specific-test:
 	@$(BT) "run-main lolcode.$(O)"
@@ -13,7 +16,7 @@ test:
 	@$(BT) "test-only"
 
 console:
-	$(BT) console
+	@$(BT) console
 
 eclipse:
-	$(BT) "eclipse with-source=true"
+	@$(BT) "eclipse with-source=true"
