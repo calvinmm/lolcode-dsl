@@ -20,6 +20,6 @@
 2. Math (Double)
 3. Functions
 4. Switch Statements
-5. Nested Anything
+5. :white_check_mark: ~~Nested Anything~~
 6. Files
 7. :white_check_mark: ~~User Input~~
