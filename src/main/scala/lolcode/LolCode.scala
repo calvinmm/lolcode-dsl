@@ -142,8 +142,15 @@ class LolCode {
         if (fun()) {
           gotoLine(line + 1)
         } else {
-          var curLine = line
-          while (!(lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])) {
+          var curLine = line + 1
+          var count = 0
+          while (!((lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])
+                   && count == 0)) {
+            if(lines(curLine).isInstanceOf[If]) {
+              count = count + 1
+            } else if(lines(curLine).isInstanceOf[EndIf]) {
+              count = count - 1
+            }
             curLine += 1
           }
           gotoLine(curLine + 1)

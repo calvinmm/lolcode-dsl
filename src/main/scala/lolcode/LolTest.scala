@@ -201,9 +201,97 @@ object LolTest_IZ_FALSE_VAR extends LolCode {
     HAI
     I_HAZ_A('num) ITZ 4
     IZ('num SMALLR_THAN 4)
-    LOL('num) R 5
+      LOL('num) R 5
     NOWAI
-    LOL('num) R 6
+      LOL('num) R 6
+    KTHX
+      VISIBLE('num)
+    KTHXBYE
+  }
+}
+
+object LolTest_NESTED_IZ_FALSE_TRUE extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('num) ITZ 8
+    IZ('num SMALLR_THAN 4)
+      IZ('num SMALLR_THAN 3)
+        LOL('num) R 13
+      NOWAI
+        LOL('num) R 14
+      KTHX
+    NOWAI
+      IZ('num BIGR_THAN 5)
+        LOL('num) R 15
+      NOWAI
+        LOL('num) R 16
+      KTHX
+    KTHX
+    VISIBLE('num)
+    KTHXBYE
+  }
+}
+
+object LolTest_NESTED_IZ_FALSE_FALSE extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('num) ITZ 4
+    IZ('num SMALLR_THAN 4)
+      IZ('num SMALLR_THAN 3)
+        LOL('num) R 13
+      NOWAI
+        LOL('num) R 14
+      KTHX
+    NOWAI
+      IZ('num BIGR_THAN 5)
+        LOL('num) R 15
+      NOWAI
+        LOL('num) R 16
+      KTHX
+    KTHX
+    VISIBLE('num)
+    KTHXBYE
+  }
+}
+
+object LolTest_NESTED_IZ_TRUE_FALSE extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('num) ITZ 3
+    IZ('num SMALLR_THAN 4)
+      IZ('num SMALLR_THAN 2)
+        LOL('num) R 13
+      NOWAI
+        LOL('num) R 14
+      KTHX
+    NOWAI
+      IZ('num BIGR_THAN 5)
+        LOL('num) R 15
+      NOWAI
+        LOL('num) R 16
+      KTHX
+    KTHX
+    VISIBLE('num)
+    KTHXBYE
+  }
+}
+
+object LolTest_NESTED_IZ_TRUE_TRUE extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('num) ITZ 1
+    IZ('num SMALLR_THAN 4)
+      IZ('num SMALLR_THAN 2)
+        LOL('num) R 13
+      NOWAI
+        LOL('num) R 14
+      KTHX
+    NOWAI
+      IZ('num BIGR_THAN 5)
+        LOL('num) R 15
+      NOWAI
+        LOL('num) R 16
+      KTHX
     KTHX
     VISIBLE('num)
     KTHXBYE

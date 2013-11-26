@@ -196,6 +196,43 @@ class JUnitLolTests {
   }
 
   @Test
+  def test_nested_ifs_false_true {
+    val command: String = "make specific-test O=LolTest_NESTED_IZ_FALSE_TRUE"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(15).map(_.toString)
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_nested_ifs_false_false {
+    val command: String = "make specific-test O=LolTest_NESTED_IZ_FALSE_FALSE"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(16).map(_.toString)
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_nested_ifs_true_false {
+    val command: String = "make specific-test O=LolTest_NESTED_IZ_TRUE_FALSE"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(14).map(_.toString)
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_nested_ifs_true_true {
+    val command: String = "make specific-test O=LolTest_NESTED_IZ_TRUE_TRUE"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(13).map(_.toString)
+    assertEquals(expected, output)
+  }
+
+
+  @Test
   def test_if_true_var {
     val command: String = "make specific-test O=LolTest_IZ_TRUE_VAR"
     val output = run_test(command)
