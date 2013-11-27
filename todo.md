@@ -18,10 +18,11 @@
 
 1. Variables (Double)
 2. Math (Double)
-3. Functions
-4. Switch Statements
-5. :white_check_mark: ~~Nested Loops~~
-6. :white_check_mark: ~~Nested Ifs~~
-7. Nested Functions
-8. Files
-9. :white_check_mark: ~~User Input~~
+3. :white_check_mark: ~~Functions (without parameters)~~
+4. Functions (with parameters)
+5. Switch Statements
+6. :white_check_mark: ~~Nested Loops~~
+7. :white_check_mark: ~~Nested Ifs~~
+8. Nested Functions
+9. Files
+10. :white_check_mark: ~~User Input~~
