@@ -46,7 +46,7 @@ class JUnitLolTests {
     val command: String = "make specific-test O=LolTest_Visible"
     val output = run_test(command)
 
-    val expected: Vector[String] = Vector("hello world", 3).map(_.toString)
+    val expected: Vector[String] = Vector("hello world", 3, 4.5).map(_.toString)
     assertEquals(expected, output)
   }
 
@@ -56,7 +56,7 @@ class JUnitLolTests {
     val output = run_test_error(command)
 
     val expected: Vector[String] =
-      Vector("hello world", "goodbye world" + Console.RESET, 10 + Console.RESET).map(_.toString)
+      Vector("hello world", "goodbye world" + Console.RESET, 10 + Console.RESET, 2.2 + Console.RESET).map(_.toString)
     assertEquals(expected, output)
   }
 
@@ -68,6 +68,15 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(1, 1337).map(_.toString)
     assertEquals(expected, output)
   }
+  
+  @Test
+  def test_double_assign {
+    val command: String = "make specific-test O=LolTest_DoubleAssign"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(10.1, 1337.13).map(_.toString)
+    assertEquals(expected, output)
+  }
 
   @Test
   def test_int_reverse_assign {
@@ -75,6 +84,15 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(150, 150).map(_.toString)
+    assertEquals(expected, output)
+  }
+  
+  @Test
+  def test_double_reverse_assign {
+    val command: String = "make specific-test O=LolTest_Double_ReverseAssign"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(60.5, 200.5).map(_.toString)
     assertEquals(expected, output)
   }
 
@@ -86,6 +104,15 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(1, 2, 8).map(_.toString)
     assertEquals(expected, output)
   }
+  
+  @Test
+  def test_double_int_assign {
+    val command: String = "make specific-test O=LolTest_Double_IntAssign"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("1", 2.5, 10.0).map(_.toString)
+    assertEquals(expected, output)
+  }
 
   @Test
   def test_int_assign_print {
@@ -93,6 +120,24 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector((1 + 1) * 4).map(_.toString)
+    assertEquals(expected, output)
+  }
+  
+  @Test
+  def test_double_assign_print {
+    val command: String = "make specific-test O=LolTest_Double_Assign_Print"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(12.0).map(_.toString)
+    assertEquals(expected, output)
+  }
+  
+  @Test
+  def test_check_types {
+    val command: String = "make specific-test O=LolTest_Check_Types"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("4", 4.0, "2", 2.0, 4.0).map(_.toString)
     assertEquals(expected, output)
   }
 
@@ -122,6 +167,15 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(2 + 3, 1 + 100).map(_.toString)
     assertEquals(expected, output)
   }
+  
+  @Test
+  def test_double_math_up {
+    val command: String = "make specific-test O=LolTest_Double_Math_Up"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(2.5 + 3, 1.1 + 100).map(_.toString)
+    assertEquals(expected, output)
+  }
 
   @Test
   def test_math_up_tiemz {
@@ -129,6 +183,15 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(13 + 100 * 12).map(_.toString)
+    assertEquals(expected, output)
+  }
+  
+  @Test
+  def test_double_math_up_tiemz {
+    val command: String = "make specific-test O=LolTest_Double_Math_Up_Tiemz"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(13.0 + 100 * 12).map(_.toString)
     assertEquals(expected, output)
   }
 
@@ -140,6 +203,15 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(13 - 2, 1337 - 1000 - 12).map(_.toString)
     assertEquals(expected, output)
   }
+  
+  @Test
+  def test_double_math_nerf {
+    val command: String = "make specific-test O=LolTest_Double_Math_Nerf"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(13.5 - 2, 1337 - 1000.0 - 12.0).map(_.toString)
+    assertEquals(expected, output)
+  }
 
   @Test
   def test_math_tiemz {
@@ -147,6 +219,15 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(3 * 3, 3 * 20).map(_.toString)
+    assertEquals(expected, output)
+  }
+  
+  @Test
+  def test_double_math_tiemz {
+    val command: String = "make specific-test O=LolTest_Double_Math_Tiemz"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(3.3 * 3.3, 3 * 20.5).map(_.toString)
     assertEquals(expected, output)
   }
 
@@ -158,6 +239,15 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(9 / 3, 100 / 10).map(_.toString)
     assertEquals(expected, output)
   }
+  
+    @Test
+  def test_double_math_ovar {
+    val command: String = "make specific-test O=LolTest_Double_Math_Ovar"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(9.0 / 3, 100 / 10.0).map(_.toString)
+    assertEquals(expected, output)
+  }
 
   @Test
   def test_math_mod {
@@ -165,6 +255,15 @@ class JUnitLolTests {
     val output = run_test(command)
 
     val expected: Vector[String] = Vector(9 % 3, 25 % 10).map(_.toString)
+    assertEquals(expected, output)
+  }
+  
+  @Test
+  def test_double_math_mod {
+    val command: String = "make specific-test O=LolTest_Double_Math_Mod"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(9.0 % 3, 25 % 10.0).map(_.toString)
     assertEquals(expected, output)
   }
 
@@ -323,7 +422,7 @@ class JUnitLolTests {
     val (n, m) = (3, 10)
 
     val expected: Vector[String] = Vector(
-      max(n, m), min(n, m), max(n, 1337), min(-20, m),
+      max(n, m), min(n, m), max(n, 1337.9).toString, min(-20.2, m).toString,
       max(n, n * m), min(m / n, n * m)).map(_.toString)
     assertEquals(expected, output)
   }

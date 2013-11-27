@@ -5,6 +5,7 @@ object LolTest_Visible extends LolCode {
     HAI
     VISIBLE("hello world")
     VISIBLE(3)
+    VISIBLE(4.5)
     KTHXBYE
   }
 }
@@ -15,6 +16,7 @@ object LolTest_Complain extends LolCode {
     VISIBLE("hello world")
     COMPLAIN("goodbye world")
     COMPLAIN(10)
+    COMPLAIN(2.2)
     KTHXBYE
   }
 }
@@ -25,6 +27,17 @@ object LolTest_IntAssign extends LolCode {
     I_HAZ_A('a) ITZ 1
     VISIBLE('a)
     I_HAZ_A('b) R 1337
+    VISIBLE('b)
+    KTHXBYE
+  }
+}
+
+object LolTest_DoubleAssign extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('a) ITZ 10.1
+    VISIBLE('a)
+    I_HAZ_A('b) R 1337.13
     VISIBLE('b)
     KTHXBYE
   }
@@ -42,6 +55,18 @@ object LolTest_Int_IntAssign extends LolCode {
   }
 }
 
+object LolTest_Double_IntAssign extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('a) ITZ 1
+    VISIBLE('a)
+    I_HAZ_A('b) R ('a UP 1.5)
+    VISIBLE('b)
+    VISIBLE('b TIEMZ 4)
+    KTHXBYE
+  }
+}
+
 object LolTest_Int_ReverseAssign extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
@@ -52,11 +77,45 @@ object LolTest_Int_ReverseAssign extends LolCode {
   }
 }
 
+object LolTest_Double_ReverseAssign extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('a) ITZ 50
+    VISIBLE('a UP 10.5)
+    VISIBLE(150.5 UP 'a)
+    KTHXBYE
+  }
+}
+
 object LolTest_Int_Assign_Print extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
     I_HAZ_A('b) R (1 UP 1)
     VISIBLE('b TIEMZ 4)
+    KTHXBYE
+  }
+}
+
+object LolTest_Double_Assign_Print extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('b) R (1.5 UP 1.5)
+    VISIBLE('b TIEMZ 4)
+    KTHXBYE
+  }
+}
+
+object LolTest_Check_Types extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    I_HAZ_A('b) R 1
+    VISIBLE('b TIEMZ 4)
+    VISIBLE('b TIEMZ 4.0)
+    I_HAZ_A('c) R 2
+    I_HAZ_A('d) R 2.0
+    VISIBLE('b TIEMZ 'c)
+    VISIBLE('d TIEMZ 'b)
+    VISIBLE('d TIEMZ 'd)
     KTHXBYE
   }
 }
@@ -93,10 +152,29 @@ object LolTest_Math_Up extends LolCode {
   }
 }
 
+object LolTest_Double_Math_Up extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    VISIBLE(2.5 UP 3)
+    LOL('a) ITZ (1.1 UP 100)
+    VISIBLE('a)
+    KTHXBYE
+  }
+}
+
 object LolTest_Math_Up_Tiemz extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
     LOL('a) ITZ (13 UP (100 TIEMZ 12))
+    VISIBLE('a)
+    KTHXBYE
+  }
+}
+
+object LolTest_Double_Math_Up_Tiemz extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('a) ITZ (13.0 UP (100 TIEMZ 12))
     VISIBLE('a)
     KTHXBYE
   }
@@ -112,11 +190,31 @@ object LolTest_Math_Nerf extends LolCode {
   }
 }
 
+object LolTest_Double_Math_Nerf extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    VISIBLE(13.5 NERF 2)
+    LOL('a) ITZ (1337 NERF 1000.0 NERF 12.0)
+    VISIBLE('a)
+    KTHXBYE
+  }
+}
+
 object LolTest_Math_Tiemz extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
     VISIBLE(3 TIEMZ 3)
     LOL('c) ITZ (3 TIEMZ 20)
+    VISIBLE('c)
+    KTHXBYE
+  }
+}
+
+object LolTest_Double_Math_Tiemz extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    VISIBLE(3.3 TIEMZ 3.3)
+    LOL('c) ITZ (3 TIEMZ 20.5)
     VISIBLE('c)
     KTHXBYE
   }
@@ -132,11 +230,31 @@ object LolTest_Math_Ovar extends LolCode {
   }
 }
 
+object LolTest_Double_Math_Ovar extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    VISIBLE(9.0 OVAR 3)
+    LOL('d) ITZ (100 OVAR 10.0)
+    VISIBLE('d)
+    KTHXBYE
+  }
+}
+
 object LolTest_Math_Mod extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
     VISIBLE(9 MOD 3)
     LOL('e) ITZ (25 MOD 10)
+    VISIBLE('e)
+    KTHXBYE
+  }
+}
+
+object LolTest_Double_Math_Mod extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    VISIBLE(9.0 MOD 3)
+    LOL('e) ITZ (25 MOD 10.0)
     VISIBLE('e)
     KTHXBYE
   }
@@ -323,9 +441,9 @@ object LolTest_BOOLEAN_OPS extends LolCode {
     HAI
     LOL('n) ITZ 10
     VISIBLE('n LIEK 10)
-    VISIBLE('n SMALLR_THAN 5)
+    VISIBLE('n SMALLR_THAN 5.0)
     VISIBLE('n BIGR_THAN 5)
-    VISIBLE('n BIGR_THAN 20)
+    VISIBLE('n BIGR_THAN 20.0)
     VISIBLE('n SMALLR_THAN 20)
     KTHXBYE
   }
@@ -413,8 +531,8 @@ object LolTest_Max_Min extends LolCode {
     LOL('m) ITZ 10
     VISIBLE(BIGR_OF('n, 'm))
     VISIBLE(SMALLR_OF('n, 'm))
-    VISIBLE(BIGR_OF('n, 1337))
-    VISIBLE(SMALLR_OF(-20, 'm))
+    VISIBLE(BIGR_OF('n, 1337.9))
+    VISIBLE(SMALLR_OF(-20.2, 'm))
     VISIBLE(BIGR_OF('n, ('n TIEMZ 'm)))
     VISIBLE(SMALLR_OF(('m OVAR 'n), ('n TIEMZ 'm)))
     KTHXBYE
