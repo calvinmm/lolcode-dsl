@@ -20,6 +20,8 @@
 2. Math (Double)
 3. Functions
 4. Switch Statements
-5. :white_check_mark: ~~Nested Anything~~
-6. Files
-7. :white_check_mark: ~~User Input~~
+5. :white_check_mark: ~~Nested Loops~~
+6. :white_check_mark: ~~Nested Ifs~~
+7. Nested Functions
+8. Files
+9. :white_check_mark: ~~User Input~~

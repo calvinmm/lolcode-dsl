@@ -1,8 +1,8 @@
 package lolcode
 
-import scala.collection.mutable.{HashMap, Stack}
+import scala.collection.mutable.{ HashMap, Stack }
 import scala.util.Random
-import scala.math.{min, max}
+import scala.math.{ min, max }
 
 class LolCode {
   abstract sealed class LolLine
@@ -25,7 +25,9 @@ class LolCode {
   case class LoopEnd(loopBegLine: Int) extends LolLine
   case class FuncBeg(name: Symbol) extends LolLine
   case class FuncEnd() extends LolLine
+  case class FuncReturn(value: Any) extends LolLine
   case class FuncCall(funcName: Symbol) extends LolLine
+  case class FuncCallReturn(funcName: Symbol, variable: Symbol) extends LolLine
   case class End(num: Int) extends LolLine
 
   // keep track of which line we are on
@@ -37,6 +39,7 @@ class LolCode {
   val random = new Random
   val loopBegLines = new Stack[Int]
   val pcStack = new Stack[Int]
+  val returnStack = new Stack[Any]
 
   def KTHXBYE() = {
     lines(current) = End(current)
@@ -117,10 +120,10 @@ class LolCode {
           case v: Function0[Any] => v()
           case _ => e
         }).mkString(" "))
-        
+
         gotoLine(line + 1)
       }
-      
+
       // print to stderr
       case ErrorPrintString(_, s: String) => {
         Console.err.println(Console.RED + s + Console.RESET)
@@ -151,10 +154,10 @@ class LolCode {
           var curLine = line + 1
           var count = 0
           while (!((lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])
-                   && count == 0)) {
-            if(lines(curLine).isInstanceOf[If]) {
+            && count == 0)) {
+            if (lines(curLine).isInstanceOf[If]) {
               count = count + 1
-            } else if(lines(curLine).isInstanceOf[EndIf]) {
+            } else if (lines(curLine).isInstanceOf[EndIf]) {
               count = count - 1
             }
             curLine += 1
@@ -187,11 +190,11 @@ class LolCode {
       case Break() => {
         var lineVar = line
         var loopBegCount = 0
-        while(!lines(lineVar).isInstanceOf[LoopEnd] ||
+        while (!lines(lineVar).isInstanceOf[LoopEnd] ||
           loopBegCount > 0) {
-          if(lines(lineVar).isInstanceOf[LoopBeg])
+          if (lines(lineVar).isInstanceOf[LoopBeg])
             loopBegCount += 1
-          if(lines(lineVar).isInstanceOf[LoopEnd])
+          if (lines(lineVar).isInstanceOf[LoopEnd])
             loopBegCount -= 1
           lineVar += 1
         }
@@ -202,18 +205,99 @@ class LolCode {
       }
       case FuncBeg(name: Symbol) => {
         var lineVar = line
-        while(!lines(lineVar).isInstanceOf[FuncEnd]) {
+        while (!lines(lineVar).isInstanceOf[FuncEnd]) {
           lineVar += 1
         }
         gotoLine(lineVar + 1)
       }
       case FuncEnd() => {
+
+        // always pop from returnStack
+        val temp: Any = returnStack.pop()
+
+        // TODO add more options
+        temp match {
+          case t: Function0[Any] => {
+            if (returnStack.length > 0) {
+              returnStack.pop() match {
+                case v: Symbol => {
+                  // set our return variable
+                  binds.set(v, t())
+                }
+                case v => {
+                  v match {
+                    case None => // throw both away
+                    case _ => {
+                      // oops both were good values
+                      returnStack.push(v)
+                      returnStack.push(t)
+                    }
+                  }
+                }
+              }
+            }
+          }
+          case t: Int => {
+            if (returnStack.length > 0) {
+              returnStack.pop() match {
+                case v: Symbol => {
+                  // set our return variable
+                  binds.set(v, t)
+                }
+                case v => {
+                  v match {
+                    case None => // throw both away
+                    case _ => {
+                      // oops both were good values
+                      returnStack.push(v)
+                      returnStack.push(t)
+                    }
+                  }
+                }
+              }
+            }
+          }
+          case t: Symbol => {
+            // oops we popped a symbol
+            returnStack.push(t)
+          }
+          case None =>
+          case _ => throw new RuntimeException(f"Something bad has happened! $temp")
+        }
+
         gotoLine(pcStack.pop())
       }
+      case FuncReturn(value: Any) => {
+        
+        // check and evaluate the types
+        value match {
+          case v: Function0[Any] => returnStack.push(v())
+          case v: Symbol => returnStack.push(binds.any(v))
+          case v => returnStack.push(v)
+        }
+
+        // actually need to go to end of function
+        var lineVar = line
+        while (!lines(lineVar).isInstanceOf[FuncEnd]) {
+          lineVar += 1
+        }
+        gotoLine(lineVar)
+      }
       case FuncCall(funcName: Symbol) => {
+        // push trash onto the return stack
+        returnStack.push(None)
         pcStack.push(line + 1)
         gotoLine(funcBegLines.get(funcName) match {
-          case Some(s) => s+1 //go beyond the start of the function
+          case Some(s) => s + 1 //go beyond the start of the function
+          case None => -1
+        })
+      }
+      case FuncCallReturn(funcName: Symbol, variable: Symbol) => {
+        // push the return variable onto the return stack
+        returnStack.push(variable)
+        pcStack.push(line + 1)
+        gotoLine(funcBegLines.get(funcName) match {
+          case Some(s) => s + 1 // go beyond the start of the function
           case None => -1
         })
       }
@@ -235,7 +319,7 @@ class LolCode {
   // int function
   def BIGR_OF(i: Int, j: Function0[Int]): Function0[Int] = { () => max(i, j()) }
   def SMALLR_OF(i: Int, j: Function0[Int]): Function0[Int] = { () => min(i, j()) }
-  
+
   // symbol symbol
   def BIGR_OF(i: Symbol, j: Symbol): Function0[Int] = { () => max(binds.num(i), binds.num(j)) }
   def SMALLR_OF(i: Symbol, j: Symbol): Function0[Int] = { () => min(binds.num(i), binds.num(j)) }
@@ -245,7 +329,7 @@ class LolCode {
   // symbol function
   def BIGR_OF(i: Symbol, j: Function0[Int]): Function0[Int] = { () => max(binds.num(i), j()) }
   def SMALLR_OF(i: Symbol, j: Function0[Int]): Function0[Int] = { () => min(binds.num(i), j()) }
-  
+
   // function function
   def BIGR_OF(i: Function0[Int], j: Function0[Int]): Function0[Int] = { () => max(i(), j()) }
   def SMALLR_OF(i: Function0[Int], j: Function0[Int]): Function0[Int] = { () => min(i(), j()) }
@@ -255,7 +339,7 @@ class LolCode {
   // function symbol
   def BIGR_OF(i: Function0[Int], j: Symbol): Function0[Int] = { () => max(i(), binds.num(j)) }
   def SMALLR_OF(i: Function0[Int], j: Symbol): Function0[Int] = { () => min(i(), binds.num(j)) }
-  
+
   // infix operators
   implicit def operator_int(i: Int) = new {
     // int int
@@ -263,11 +347,11 @@ class LolCode {
     def NERF(j: Int): Function0[Int] = { () => (i - j) }
     def TIEMZ(j: Int): Function0[Int] = { () => (i * j) }
     def OVAR(j: Int): Function0[Int] = { () => (i / j) }
-    def MOD(j: Int): Function0[Int] = { () => (i % j) }    
+    def MOD(j: Int): Function0[Int] = { () => (i % j) }
     def BIGR_THAN(j: Int): Function0[Boolean] = { () => (i > j) }
     def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (i < j) }
     def LIEK(j: Int): Function0[Boolean] = { () => (i == j) }
-    
+
     // int symbol
     def UP(j: Symbol): Function0[Int] = { () => (i + binds.num(j)) }
     def NERF(j: Symbol): Function0[Int] = { () => (i - binds.num(j)) }
@@ -277,7 +361,7 @@ class LolCode {
     def BIGR_THAN(j: Symbol): Function0[Boolean] = { () => (i > binds.num(j)) }
     def SMALLR_THAN(j: Symbol): Function0[Boolean] = { () => (i < binds.num(j)) }
     def LIEK(j: Symbol): Function0[Boolean] = { () => (i == binds.num(j)) }
-    
+
     // int function
     def UP(j: Function0[Int]): Function0[Int] = { () => (i + j()) }
     def NERF(j: Function0[Int]): Function0[Int] = { () => (i - j()) }
@@ -299,7 +383,7 @@ class LolCode {
     def BIGR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) > j) }
     def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) < j) }
     def LIEK(j: Int): Function0[Boolean] = { () => (binds.num(i) == j) }
-    
+
     // symbol symbol
     def UP(j: Symbol): Function0[Int] = { () => binds.num(i) + binds.num(j) }
     def NERF(j: Symbol): Function0[Int] = { () => binds.num(i) - binds.num(j) }
@@ -309,7 +393,7 @@ class LolCode {
     def BIGR_THAN(j: Symbol): Function0[Boolean] = { () => (binds.num(i) > binds.num(j)) }
     def SMALLR_THAN(j: Symbol): Function0[Boolean] = { () => (binds.num(i) < binds.num(j)) }
     def LIEK(j: Symbol): Function0[Boolean] = { () => (binds.num(i) == binds.num(j)) }
-    
+
     // symbol function
     def UP(j: Function0[Int]): Function0[Int] = { () => binds.num(i) + j() }
     def NERF(j: Function0[Int]): Function0[Int] = { () => binds.num(i) - j() }
@@ -331,7 +415,7 @@ class LolCode {
     def BIGR_THAN(j: Int): Function0[Boolean] = { () => (i() > j) }
     def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (i() < j) }
     def LIEK(j: Int): Function0[Boolean] = { () => (i() == j) }
-    
+
     // function symbol
     def UP(j: Symbol): Function0[Int] = { () => (i() + binds.num(j)) }
     def NERF(j: Symbol): Function0[Int] = { () => (i() - binds.num(j)) }
@@ -341,7 +425,7 @@ class LolCode {
     def BIGR_THAN(j: Symbol): Function0[Boolean] = { () => (i() > binds.num(j)) }
     def SMALLR_THAN(j: Symbol): Function0[Boolean] = { () => (i() < binds.num(j)) }
     def LIEK(j: Symbol): Function0[Boolean] = { () => (i() == binds.num(j)) }
-    
+
     // function function
     def UP(j: Function0[Int]): Function0[Int] = { () => (i() + j()) }
     def NERF(j: Function0[Int]): Function0[Int] = { () => (i() - j()) }
@@ -408,6 +492,10 @@ class LolCode {
       lines(current) = ErrorPrintNumber(current, s)
       current += 1
     }
+    def apply(s: Function0[Any]) = {
+      lines(current) = ErrorPrintFunction(current, s)
+      current += 1
+    }
   }
 
   object I_HAZ_A {
@@ -453,6 +541,13 @@ class LolCode {
     }
   }
 
+  object FOUND_YR {
+    def apply(value: Any) = {
+      lines(current) = FuncReturn(value)
+      current += 1
+    }
+  }
+
   def IF_U_SAY_SO {
     lines(current) = FuncEnd()
     current += 1
@@ -461,6 +556,10 @@ class LolCode {
   object PLZ {
     def apply(funcName: Symbol) = {
       lines(current) = FuncCall(funcName)
+      current += 1
+    }
+    def apply(funcName: Symbol, variable: Symbol) = {
+      lines(current) = FuncCallReturn(funcName, variable)
       current += 1
     }
   }

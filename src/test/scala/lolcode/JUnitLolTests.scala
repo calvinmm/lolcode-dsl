@@ -363,4 +363,22 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector("10", "1")
     assertEquals(expected, output)
   }
+  
+  @Test
+  def test_function_return {
+    val command: String = "make specific-test O=LolTest_Function_Return"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("beep", "bing", 347, "bang", "bing", 347, 47).map(_.toString)
+    assertEquals(expected, output)
+  }
+  
+  @Test
+  def test_function_recursion {
+    val command: String = "make specific-test O=LolTest_Function_Recursion"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector(2048).map(_.toString)
+    assertEquals(expected, output)
+  }
 }

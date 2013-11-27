@@ -475,3 +475,51 @@ object LolTest_AssignmentInFunction extends LolCode {
     KTHXBYE
   }
 }
+
+object LolTest_Function_Return extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    HOW_DUZ_I('beep)
+      VISIBLE("beep")
+      PLZ('bang)
+      PLZ('bing, 'temp)
+      VISIBLE('temp)
+      FOUND_YR('temp NERF 300)
+    IF_U_SAY_SO
+    HOW_DUZ_I('bang)
+      PLZ('bing, 'qwerty)
+      VISIBLE('qwerty)
+      VISIBLE("bang")
+      FOUND_YR(1000000)
+    IF_U_SAY_SO
+    HOW_DUZ_I('bing)
+      VISIBLE("bing")
+      FOUND_YR(347)
+    IF_U_SAY_SO
+    PLZ('beep, 'x)
+    VISIBLE('x)
+    KTHXBYE
+  }
+}
+
+object LolTest_Function_Recursion extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    LOL('x) ITZ 2
+    LOL('i) ITZ 10
+    HOW_DUZ_I('recurse)
+      IZ('i LIEK 0)
+        FOUND_YR('x)
+        VISIBLE("nope")
+      NOWAI
+      KTHX
+      LOL('i) ITZ ('i NERF 1)
+      LOL('x) ITZ ('x UP 'x)
+      PLZ('recurse, 'x)
+      FOUND_YR('x)
+    IF_U_SAY_SO
+    PLZ('recurse, 'value)
+    VISIBLE('value)
+    KTHXBYE
+  }
+}
