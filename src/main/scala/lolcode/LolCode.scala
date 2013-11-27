@@ -144,7 +144,7 @@ class LolCode {
         gotoLine(line + 1)
       }
       case ErrorPrintMany(_, s: Vector[Any]) => {
-        
+
         Console.err.println(Console.RED + s.map(e => e match {
           case v: Symbol => binds.any(v)
           case v: Function0[Any] => v()
@@ -153,7 +153,7 @@ class LolCode {
 
         gotoLine(line + 1)
       }
-      
+
       case ReadString(_, s: Symbol) => {
         val value: Any = tryInt(readLine())
         binds.set(s, value)
@@ -229,7 +229,7 @@ class LolCode {
         val temp: Any = returnStack.pop()
 
         binds.leaveScope()
-        
+
         // TODO add more options
         temp match {
           case t: Function0[Any] => {
@@ -283,7 +283,7 @@ class LolCode {
         gotoLine(pcStack.pop())
       }
       case FuncReturn(value: Any) => {
-        
+
         // check and evaluate the types
         value match {
           case v: Function0[Any] => returnStack.push(v())
@@ -326,37 +326,7 @@ class LolCode {
   // prefix operators / functions
   def RAND(i: Int, j: Int): Int = { random.nextInt(j + 1 - i) + i }
 
-  //  // max and min functions
-  //  // int int
-  //  def BIGR_OF(i: Int, j: Int): Function0[Int] = { () => max(i, j) }
-  //  def SMALLR_OF(i: Int, j: Int): Function0[Int] = { () => min(i, j) }
-  //  // int symbol
-  //  def BIGR_OF(i: Int, j: Symbol): Function0[Int] = { () => max(i, binds.num(j)) }
-  //  def SMALLR_OF(i: Int, j: Symbol): Function0[Int] = { () => min(i, binds.num(j)) }
-  //  // int function
-  //  def BIGR_OF(i: Int, j: Function0[Int]): Function0[Int] = { () => max(i, j()) }
-  //  def SMALLR_OF(i: Int, j: Function0[Int]): Function0[Int] = { () => min(i, j()) }
-  //
-  //  // symbol symbol
-  //  def BIGR_OF(i: Symbol, j: Symbol): Function0[Int] = { () => max(binds.num(i), binds.num(j)) }
-  //  def SMALLR_OF(i: Symbol, j: Symbol): Function0[Int] = { () => min(binds.num(i), binds.num(j)) }
-  //  // symbol int
-  //  def BIGR_OF(i: Symbol, j: Int): Function0[Int] = { () => max(binds.num(i), j) }
-  //  def SMALLR_OF(i: Symbol, j: Int): Function0[Int] = { () => min(binds.num(i), j) }
-  //  // symbol function
-  //  def BIGR_OF(i: Symbol, j: Function0[Int]): Function0[Int] = { () => max(binds.num(i), j()) }
-  //  def SMALLR_OF(i: Symbol, j: Function0[Int]): Function0[Int] = { () => min(binds.num(i), j()) }
-  //
-  //  // function function
-  //  def BIGR_OF(i: Function0[Int], j: Function0[Int]): Function0[Int] = { () => max(i(), j()) }
-  //  def SMALLR_OF(i: Function0[Int], j: Function0[Int]): Function0[Int] = { () => min(i(), j()) }
-  //  // function int
-  //  def BIGR_OF(i: Function0[Int], j: Int): Function0[Int] = { () => max(i(), j) }
-  //  def SMALLR_OF(i: Function0[Int], j: Int): Function0[Int] = { () => min(i(), j) }
-  //  // function symbol
-  //  def BIGR_OF(i: Function0[Int], j: Symbol): Function0[Int] = { () => max(i(), binds.num(j)) }
-  //  def SMALLR_OF(i: Function0[Int], j: Symbol): Function0[Int] = { () => min(i(), binds.num(j)) }
-
+  //  max and min functions
   def BIGR_OF(i: Any, j: Any): Function0[Any] = {
     () =>
       {
@@ -420,7 +390,8 @@ class LolCode {
         }
       }
   }
-  
+
+  // infix operators
   implicit def operator_any(i: Any) = new {
     def UP(j: Any): Function0[Any] = {
       () =>
@@ -679,103 +650,6 @@ class LolCode {
     }
 
   }
-  
-  // infix operators
-//  implicit def operator_int(i: Int) = new {
-//    // int int
-//    def UP(j: Int): Function0[Int] = { () => (i + j) }
-//    def NERF(j: Int): Function0[Int] = { () => (i - j) }
-//    def TIEMZ(j: Int): Function0[Int] = { () => (i * j) }
-//    def OVAR(j: Int): Function0[Int] = { () => (i / j) }
-//    def MOD(j: Int): Function0[Int] = { () => (i % j) }
-//    def BIGR_THAN(j: Int): Function0[Boolean] = { () => (i > j) }
-//    def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (i < j) }
-//    def LIEK(j: Int): Function0[Boolean] = { () => (i == j) }
-//
-//    // int symbol
-//    def UP(j: Symbol): Function0[Int] = { () => (i + binds.num(j)) }
-//    def NERF(j: Symbol): Function0[Int] = { () => (i - binds.num(j)) }
-//    def TIEMZ(j: Symbol): Function0[Int] = { () => (i * binds.num(j)) }
-//    def OVAR(j: Symbol): Function0[Int] = { () => (i / binds.num(j)) }
-//    def MOD(j: Symbol): Function0[Int] = { () => (i % binds.num(j)) }
-//    def BIGR_THAN(j: Symbol): Function0[Boolean] = { () => (i > binds.num(j)) }
-//    def SMALLR_THAN(j: Symbol): Function0[Boolean] = { () => (i < binds.num(j)) }
-//    def LIEK(j: Symbol): Function0[Boolean] = { () => (i == binds.num(j)) }
-//
-//    // int function
-//    def UP(j: Function0[Int]): Function0[Int] = { () => (i + j()) }
-//    def NERF(j: Function0[Int]): Function0[Int] = { () => (i - j()) }
-//    def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (i * j()) }
-//    def OVAR(j: Function0[Int]): Function0[Int] = { () => (i / j()) }
-//    def MOD(j: Function0[Int]): Function0[Int] = { () => (i % j()) }
-//    def BIGR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (i > j()) }
-//    def SMALLR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (i < j()) }
-//    def LIEK(j: Function0[Int]): Function0[Boolean] = { () => (i == j()) }
-//  }
-//
-//  implicit def operator_symbol(i: Symbol) = new {
-//    // symbol int
-//    def UP(j: Int): Function0[Int] = { () => binds.num(i) + j }
-//    def NERF(j: Int): Function0[Int] = { () => binds.num(i) - j }
-//    def TIEMZ(j: Int): Function0[Int] = { () => binds.num(i) * j }
-//    def OVAR(j: Int): Function0[Int] = { () => binds.num(i) / j }
-//    def MOD(j: Int): Function0[Int] = { () => binds.num(i) % j }
-//    def BIGR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) > j) }
-//    def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (binds.num(i) < j) }
-//    def LIEK(j: Int): Function0[Boolean] = { () => (binds.num(i) == j) }
-//
-//    // symbol symbol
-//    def UP(j: Symbol): Function0[Int] = { () => binds.num(i) + binds.num(j) }
-//    def NERF(j: Symbol): Function0[Int] = { () => binds.num(i) - binds.num(j) }
-//    def TIEMZ(j: Symbol): Function0[Int] = { () => binds.num(i) * binds.num(j) }
-//    def OVAR(j: Symbol): Function0[Int] = { () => binds.num(i) / binds.num(j) }
-//    def MOD(j: Symbol): Function0[Int] = { () => binds.num(i) % binds.num(j) }
-//    def BIGR_THAN(j: Symbol): Function0[Boolean] = { () => (binds.num(i) > binds.num(j)) }
-//    def SMALLR_THAN(j: Symbol): Function0[Boolean] = { () => (binds.num(i) < binds.num(j)) }
-//    def LIEK(j: Symbol): Function0[Boolean] = { () => (binds.num(i) == binds.num(j)) }
-//
-//    // symbol function
-//    def UP(j: Function0[Int]): Function0[Int] = { () => binds.num(i) + j() }
-//    def NERF(j: Function0[Int]): Function0[Int] = { () => binds.num(i) - j() }
-//    def TIEMZ(j: Function0[Int]): Function0[Int] = { () => binds.num(i) * j() }
-//    def OVAR(j: Function0[Int]): Function0[Int] = { () => binds.num(i) / j() }
-//    def MOD(j: Function0[Int]): Function0[Int] = { () => binds.num(i) % j() }
-//    def BIGR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (binds.num(i) > j()) }
-//    def SMALLR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (binds.num(i) < j()) }
-//    def LIEK(j: Function0[Int]): Function0[Boolean] = { () => (binds.num(i) == j()) }
-//  }
-//
-//  implicit def operator_function(i: Function0[Int]) = new {
-//    // function int
-//    def UP(j: Int): Function0[Int] = { () => (i() + j) }
-//    def NERF(j: Int): Function0[Int] = { () => (i() - j) }
-//    def TIEMZ(j: Int): Function0[Int] = { () => (i() * j) }
-//    def OVAR(j: Int): Function0[Int] = { () => (i() / j) }
-//    def MOD(j: Int): Function0[Int] = { () => (i() % j) }
-//    def BIGR_THAN(j: Int): Function0[Boolean] = { () => (i() > j) }
-//    def SMALLR_THAN(j: Int): Function0[Boolean] = { () => (i() < j) }
-//    def LIEK(j: Int): Function0[Boolean] = { () => (i() == j) }
-//
-//    // function symbol
-//    def UP(j: Symbol): Function0[Int] = { () => (i() + binds.num(j)) }
-//    def NERF(j: Symbol): Function0[Int] = { () => (i() - binds.num(j)) }
-//    def TIEMZ(j: Symbol): Function0[Int] = { () => (i() * binds.num(j)) }
-//    def OVAR(j: Symbol): Function0[Int] = { () => (i() / binds.num(j)) }
-//    def MOD(j: Symbol): Function0[Int] = { () => (i() % binds.num(j)) }
-//    def BIGR_THAN(j: Symbol): Function0[Boolean] = { () => (i() > binds.num(j)) }
-//    def SMALLR_THAN(j: Symbol): Function0[Boolean] = { () => (i() < binds.num(j)) }
-//    def LIEK(j: Symbol): Function0[Boolean] = { () => (i() == binds.num(j)) }
-//
-//    // function function
-//    def UP(j: Function0[Int]): Function0[Int] = { () => (i() + j()) }
-//    def NERF(j: Function0[Int]): Function0[Int] = { () => (i() - j()) }
-//    def TIEMZ(j: Function0[Int]): Function0[Int] = { () => (i() * j()) }
-//    def OVAR(j: Function0[Int]): Function0[Int] = { () => (i() / j()) }
-//    def MOD(j: Function0[Int]): Function0[Int] = { () => (i() % j()) }
-//    def BIGR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (i() > j()) }
-//    def SMALLR_THAN(j: Function0[Int]): Function0[Boolean] = { () => (i() < j()) }
-//    def LIEK(j: Function0[Int]): Function0[Boolean] = { () => (i() == j()) }
-//  }
 
   object GIMMEH {
     def apply(s: Symbol) = {
