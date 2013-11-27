@@ -16,8 +16,8 @@
 
 ### Stretch Goals
 
-1. Variables (Double)
-2. Math (Double)
+1. :white_check_mark: ~~Variables (Double)~~
+2. :white_check_mark: ~~Math (Double)~~
 3. :white_check_mark: ~~Functions (without parameters)~~
 4. Functions (with parameters)
 5. Switch Statements
