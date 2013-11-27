@@ -381,4 +381,22 @@ class JUnitLolTests {
     val expected: Vector[String] = Vector(2048).map(_.toString)
     assertEquals(expected, output)
   }
+
+  @Test
+  def test_scope {
+    val command: String = "make specific-test O=LolTest_Scope"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("None")
+    assertEquals(expected, output)
+  }
+
+  @Test
+  def test_scope2 {
+    val command: String = "make specific-test O=LolTest_Scope2"
+    val output = run_test(command)
+
+    val expected: Vector[String] = Vector("None", "1")
+    assertEquals(expected, output)
+  }
 }

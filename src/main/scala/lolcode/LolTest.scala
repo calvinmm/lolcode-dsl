@@ -501,6 +501,16 @@ object LolTest_Function_Return extends LolCode {
     KTHXBYE
   }
 }
+object LolTest_Scope extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    HOW_DUZ_I('func1)
+      LOL('n) ITZ 1
+    IF_U_SAY_SO
+    VISIBLE('n)
+    KTHXBYE
+  }
+}
 
 object LolTest_Function_Recursion extends LolCode {
   def main(args: Array[String]): Unit = {
@@ -520,6 +530,23 @@ object LolTest_Function_Recursion extends LolCode {
     IF_U_SAY_SO
     PLZ('recurse, 'value)
     VISIBLE('value)
+    KTHXBYE
+  }
+}
+
+object LolTest_Scope2 extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
+    HOW_DUZ_I('func1)
+      LOL('n) ITZ 1
+    IF_U_SAY_SO
+    HOW_DUZ_I('func2)
+      PLZ('func1)
+      VISIBLE('n)
+      LOL('n) ITZ 1
+      VISIBLE('n)
+    IF_U_SAY_SO
+    PLZ('func2)
     KTHXBYE
   }
 }
