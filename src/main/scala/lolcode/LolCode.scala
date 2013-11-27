@@ -216,6 +216,8 @@ class LolCode {
         // always pop from returnStack
         val temp: Any = returnStack.pop()
 
+        binds.leaveScope()
+        
         // TODO add more options
         temp match {
           case t: Function0[Any] => {
@@ -266,7 +268,6 @@ class LolCode {
           case _ => throw new RuntimeException(f"Something bad has happened! $temp")
         }
 
-        binds.leaveScope()
         gotoLine(pcStack.pop())
       }
       case FuncReturn(value: Any) => {
@@ -299,6 +300,7 @@ class LolCode {
         // push the return variable onto the return stack
         returnStack.push(variable)
         pcStack.push(line + 1)
+        binds.newScope()
         gotoLine(funcBegLines.get(funcName) match {
           case Some(s) => s + 1 // go beyond the start of the function
           case None => -1
