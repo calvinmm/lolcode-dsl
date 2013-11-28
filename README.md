@@ -60,6 +60,9 @@ Specifically, please abide by the following style rules:
 ## Issues
 Find and report issues [here](https://github.com/calvinmm/lolcode-dsl/issues)
 
+## LOLCODE Documentation
+View the documentation for our implementation of LOLCODE [here](LolCode.md)
+
 ## LOLCODE Keywords
 List of current LOLCODE keywords [here](keywords.md)
 
