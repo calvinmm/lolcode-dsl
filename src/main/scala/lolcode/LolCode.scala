@@ -18,6 +18,7 @@ class LolCode {
   case class ErrorPrintFunction(num: Int, s: Function0[Any]) extends LolLine
   case class ErrorPrintMany(num: Int, s: Vector[Any]) extends LolLine
   case class If(num: Int, fun: Function0[Boolean]) extends LolLine
+  case class IfSymb(num: Int, sym: Symbol) extends LolLine
   case class StartFalse(num: Int) extends LolLine
   case class EndIf(num: Int) extends LolLine
   case class Assign(num: Int, fn: Function0[Unit]) extends LolLine
@@ -97,6 +98,26 @@ class LolCode {
    * runtime evaluator of LOLCODE
    */
   private def gotoLine(line: Int) {
+
+    def GeneralIf(bool: Boolean): Unit = {
+      if (bool) {
+        gotoLine(line + 1)
+      } else {
+        var curLine = line + 1
+        var count = 0
+        while (!((lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])
+                 && count == 0)) {
+          if(lines(curLine).isInstanceOf[If]) {
+            count = count + 1
+          } else if(lines(curLine).isInstanceOf[EndIf]) {
+            count = count - 1
+          }
+          curLine += 1
+        }
+        gotoLine(curLine + 1)
+      }
+    }
+
     lines(line) match {
       // print to stdout
       case PrintString(_, s: String) => {
@@ -161,22 +182,11 @@ class LolCode {
       }
 
       case If(_, fun: Function0[Boolean]) => {
-        if (fun()) {
-          gotoLine(line + 1)
-        } else {
-          var curLine = line + 1
-          var count = 0
-          while (!((lines(curLine).isInstanceOf[StartFalse] || lines(curLine).isInstanceOf[EndIf])
-            && count == 0)) {
-            if (lines(curLine).isInstanceOf[If]) {
-              count = count + 1
-            } else if (lines(curLine).isInstanceOf[EndIf]) {
-              count = count - 1
-            }
-            curLine += 1
-          }
-          gotoLine(curLine + 1)
-        }
+        GeneralIf(fun())
+      }
+
+      case IfSymb(_, sym: Symbol) => {
+        GeneralIf(binds.any(sym).asInstanceOf[Boolean])
       }
 
       case StartFalse(_) => {
@@ -731,6 +741,10 @@ class LolCode {
   object IZ {
     def apply(s: Function0[Boolean]) = {
       lines(current) = If(current, s)
+      current += 1
+    }
+    def apply(s: Symbol) = {
+      lines(current) = IfSymb(current, s)
       current += 1
     }
   }

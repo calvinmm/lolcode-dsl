@@ -336,6 +336,14 @@ class JUnitLolTests {
     val command: String = "make specific-test O=LolTest_IZ_TRUE_VAR"
     val output = run_test(command)
 
+    val expected: Vector[String] = Vector("True")
+    assertEquals(expected, output)
+  }
+  @Test
+  def test_if_true_func {
+    val command: String = "make specific-test O=LolTest_IZ_TRUE_FUNC"
+    val output = run_test(command)
+
     val expected: Vector[String] = Vector(5).map(_.toString)
     assertEquals(expected, output)
   }
