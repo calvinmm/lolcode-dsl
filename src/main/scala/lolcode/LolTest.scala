@@ -185,6 +185,19 @@ object LolTest_IZ_FALSE_NUMS extends LolCode {
 object LolTest_IZ_TRUE_VAR extends LolCode {
   def main(args: Array[String]): Unit = {
     HAI
+    I_HAZ_A('bool) ITZ (4 LIEK 4)
+    IZ('bool)
+      VISIBLE("True")
+    NOWAI
+      VISIBLE("False")
+    KTHX
+    KTHXBYE
+  }
+}
+
+object LolTest_IZ_TRUE_FUNC extends LolCode {
+  def main(args: Array[String]): Unit = {
+    HAI
     I_HAZ_A('num) ITZ 4
     IZ('num LIEK 4)
     LOL('num) R 5
